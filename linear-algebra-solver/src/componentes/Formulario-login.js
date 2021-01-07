@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container, Form, Card, Button} from 'react-bootstrap'
 
-const Formulario_login = () => {
+const Formulario_login = (props) => {
 
     return(
         <Container fluid className="container_login">
@@ -13,14 +13,14 @@ const Formulario_login = () => {
                 <Card></Card>
                 <Card>
                     <h1 className="title">Login</h1>
-                    <Form>
+                    <Form onSubmit={props.onSubmit}>
                         <Form.Group>
-                            <Form.Control id="user" type="text" required="required" />
+                            <Form.Control name="user" id="user" type="text" required="required" onChange={props.onChange}/>
                             <Form.Label>Usuario</Form.Label>
                             <div className="bar"></div>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Control id="pass" type="password" required />
+                            <Form.Control name="pass" id="pass" type="password" required onChange={props.onChange}/>
                             <Form.Label>Password</Form.Label>
                             <div className="bar"></div>
                         </Form.Group>
