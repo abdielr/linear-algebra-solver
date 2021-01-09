@@ -37,10 +37,11 @@ class Login extends React.Component{
 
     handleEnviar = () => {
         var self = this
-        var url = server + '/ServletLogIn?user='+this.state.form.user+'&pass='+this.state.form.pass
+        var url = server + '/Login?user='+this.state.form.user+'&pass='+this.state.form.pass
         $.ajax({
             type: "GET",
             url: url,
+            crossDomain: true,
             dataType: 'json',
             success: function (result) {
                 self.setState({
