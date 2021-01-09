@@ -25,7 +25,7 @@ const Formulario_login = (props) => {
                             <div className="bar"></div>
                         </Form.Group>
                         <Form.Group className="submit-button">
-                            <Button><span>Enviar</span></Button>
+                            <Button type="submit" onClick={props.onClick}><span>Enviar</span></Button>
                         </Form.Group>
                     </Form>
                 </Card>

@@ -1,15 +1,27 @@
 import '../css/login.css'
 import React from 'react'
 import Log from '../componentes/Formulario-login'
+import server from '../config-url'
+import $ from 'jquery'
 
 class Login extends React.Component{
 
-    state = {
-        form:{
-            user: "",
-            pass: ""
-        },
-        error: null
+    constructor(props){
+        super(props)
+        this.state = {
+            form: {
+                user: "",
+                pass: ""
+            },
+            res: {
+                data: {}
+            },
+            error: null
+        }
+
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+
     }
 
     handleChange = (e) => {
@@ -23,29 +35,32 @@ class Login extends React.Component{
 
     }
 
-    handleSubmit = async(e) => {
+    handleEnviar = () => {
+        var self = this
+        var url = server + '/ServletLogIn?user='+this.state.form.user+'&pass='+this.state.form.pass
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            success: function (result) {
+                self.setState({
+                    res: { data: result.data }
+                })
+                //alert(JSON.stringify(self.state.res))
+                var d = JSON.stringify(self.state.res.data)
+                if(self.state.res.data.state){
+                    window.location.href = '/home/' + d
+                }
+            },
+            error: function (result) {
+                self.setState({ error: result })
+            }
+        })
+    }
+
+    handleSubmit = (e) => {
 
         e.preventDefault()
-
-        try{
-
-            let config = {
-                method: 'POST',
-                body: JSON.stringify(this.state.form)
-            }
-
-            let res = await fetch('', config)
-            let json = await res.json()
-
-            console.log(json);
-            this.props.histoy.push('/algomas')
-
-        }catch(error){
-            this.setState({
-                loading: false,
-                error
-            })
-        }
 
     }
 
@@ -53,6 +68,7 @@ class Login extends React.Component{
 
         return(
             <Log onChange={this.handleChange}
+            onClick={this.handleEnviar}
             onSubmit={this.handleSubmit} />
         )
 
