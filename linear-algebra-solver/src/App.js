@@ -1,8 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import './css/home.css'
 import { BrowserRouter, Switch, Route} from 'react-router-dom'
 import Login from './pages/Login'
 import Home from './pages/Home'
+import Authe from './componentes/Authentication'
 
 function App() {
 
@@ -10,7 +12,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Login} />
-        <Route exact path="/home/:data" component={Home} />
+        <Route path="/home" component={props => <Authe {...props} Component={Home} />} />
       </Switch>
     </BrowserRouter>
   );

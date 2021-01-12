@@ -37,21 +37,21 @@ class Login extends React.Component{
 
     handleEnviar = () => {
         var self = this
-        var url = server + '/Login?user='+this.state.form.user+'&pass='+this.state.form.pass
+        var url = server + '/api/LogIn?username=' + this.state.form.user +'&password='+this.state.form.pass
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: url,
             crossDomain: true,
             dataType: 'json',
             success: function (result) {
                 self.setState({
-                    res: { data: result.data }
+                    res: { data: result }
                 })
-                //alert(JSON.stringify(self.state.res))
-                var d = JSON.stringify(self.state.res.data)
-                if(self.state.res.data.state){
-                    window.location.href = '/home/' + d
-                }
+                //console.log(self.state.res.data)
+                //var d = JSON.stringify(self.state.res.data)
+                window.localStorage.setItem("APP_USER", JSON.stringify(self.state.res.data))
+                //console.log(JSON.parse(window.localStorage.getItem("APP_USER")))
+                window.location.href = '/home'
             },
             error: function (result) {
                 self.setState({ error: result })
