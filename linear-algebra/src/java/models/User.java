@@ -28,14 +28,23 @@ public class User {
     public JSONObject LogIn(String username,String password){
         JSONObject data = new JSONObject();
         
-        String query = "select * from usuarios where username = ? and password = ? ";
+        String query = "select * from usuario where username = ? and password = ? ";
         PreparedStatement ps;
         try {
             ps = con.prepareStatement(query);
             ps.setString(1,username);
             ps.setString(2,password);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if(rs.first()){
+                System.out.println(rs.getString(1));
+                System.out.println(rs.getString(2));
+                JSONObject user = new JSONObject();
+                user.put("name",rs.getString(2));
+                user.put("paterno",rs.getString(3));
+                user.put("materno",rs.getString(6));
+                user.put("username", rs.getString(5));
+                
+                data.put("user", user);
                 data.put("state",200);
                 data.put("message","Usuario encontrado.");
             }else{
@@ -48,7 +57,7 @@ public class User {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-       
+            
         return data;
     }
 
@@ -74,6 +83,10 @@ public class User {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
        
+        return data;
+    }
+    public JSONObject getUserInfo(){
+        JSONObject data = new JSONObject();
         return data;
     }
 }

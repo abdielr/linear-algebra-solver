@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.User;
+import org.json.JSONObject;
 
 /**
  *
@@ -60,16 +61,18 @@ public class LogIn extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          response.setContentType("application/json");
-        
-        String username =  request.getParameter("user");
-        String password =  request.getParameter("pass");
+        response.setCharacterEncoding("UTF-8");
+        String username =  request.getParameter("username");
+        String password =  request.getParameter("password");
         
 
         try {
             
             User u = new User();
-            u.LogIn(username, password);
-            response.getWriter().print(u);
+            JSONObject data = u.LogIn(username, password);
+            response.getWriter().print(data);
+            response.getWriter().flush();
+
             
             
         } catch (SQLException ex) {
