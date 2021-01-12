@@ -11,11 +11,11 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
-        <url-pattern>/SignUp</url-pattern>
+        <url-pattern>/api/SignUp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LogIn</servlet-name>
-        <url-pattern>/LogIn</url-pattern>
+        <url-pattern>/api/LogIn</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
