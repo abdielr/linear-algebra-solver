@@ -70,6 +70,7 @@ public class LogIn extends HttpServlet {
             
             User u = new User();
             JSONObject data = u.LogIn(username, password);
+            response.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
             response.getWriter().print(data);
             response.getWriter().flush();
 
