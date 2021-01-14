@@ -27,12 +27,13 @@ DROP TABLE IF EXISTS `ejercicio`;
 CREATE TABLE `ejercicio` (
   `id_ejercicio` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(45) NOT NULL,
-  `imagen` blob,
-  `a` varchar(45) DEFAULT NULL,
-  `b` varchar(45) DEFAULT NULL,
-  `c` varchar(45) DEFAULT NULL,
-  `d` varchar(45) DEFAULT NULL,
-  `respuesta` char(1) NOT NULL,
+  `imagen` mediumblob,
+  `a` mediumblob,
+  `b` mediumblob,
+  `c` mediumblob,
+  `d` mediumblob,
+  `respuesta` varchar(25) NOT NULL,
+  `descripcion` varchar(100) DEFAULT NULL,
   `id_tema` int(11) DEFAULT NULL,
   `id_sub` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_ejercicio`),
@@ -115,7 +116,7 @@ DROP TABLE IF EXISTS `tema`;
 CREATE TABLE `tema` (
   `id_tema` int(11) NOT NULL AUTO_INCREMENT,
   `titulo` varchar(30) NOT NULL,
-  `video` blob,
+  `video` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_tema`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -126,7 +127,7 @@ CREATE TABLE `tema` (
 
 LOCK TABLES `tema` WRITE;
 /*!40000 ALTER TABLE `tema` DISABLE KEYS */;
-INSERT INTO `tema` VALUES (1,'Vectores',NULL),(2,'Matrices',NULL);
+INSERT INTO `tema` VALUES (1,'Vectores','https://youtu.be/aYlICOhaO1g'),(2,'Matrices','https://youtu.be/4YX9YmRE62c');
 /*!40000 ALTER TABLE `tema` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +145,8 @@ CREATE TABLE `usuario` (
   `password` varchar(20) NOT NULL,
   `username` varchar(15) NOT NULL,
   `materno` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_user`)
+  PRIMARY KEY (`id_user`),
+  UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -154,7 +156,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Jessica','Castro','1234','jssx',NULL),(2,'Abdiel','Reyes','2345','abykings',NULL),(3,'Luis ','Zuniga','5678','lxxs',NULL);
+INSERT INTO `usuario` VALUES (1,'Jessica','Castro','1234','jssx',NULL),(2,'Abdiel','Reyes','2345','abykings','Rodriguez'),(3,'Luis ','Zuniga','5678','lxxs',NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -167,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-11 21:17:35
+-- Dump completed on 2021-01-14  0:03:22

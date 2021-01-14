@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers.excercises;
+package controllers.excercise;
 
 import controllers.session.SignUp;
 import java.io.IOException;

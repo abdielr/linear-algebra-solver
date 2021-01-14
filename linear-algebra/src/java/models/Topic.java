@@ -29,7 +29,8 @@ public class Topic {
     }
     public JSONObject getTopics(){
         JSONObject data = new JSONObject();
-        String query = "SELECT tema.titulo as titulo, subtema.titulo as subtitulo FROM tema INNER JOIN subtema on subtema.id_tema = tema.id_tema; ";
+        String query = "SELECT tema.titulo as titulo, tema.video as video_tema, subtema.titulo as subtitulo, subtema.descripcion as descripcion, tema.id_tema as id_tema,"
+                + " subtema.id_subtema as id_subtema FROM tema INNER JOIN subtema on subtema.id_tema = tema.id_tema; ";
         PreparedStatement ps;
         try {
             ps = con.prepareStatement(query);
@@ -37,16 +38,19 @@ public class Topic {
             ResultSet rs = ps.executeQuery();
             
             if(rs.next()){
+               
+                
                 
                 JSONArray arr = new JSONArray();
                do{
                    JSONObject topic = new JSONObject();
-                    String a = rs.getString("titulo");
-                    String b = rs.getString("subtitulo");
-                    System.out.println();
-                    
-                    topic.put("tema", a);
-                    topic.put("subtema", b);
+                   
+                    topic.put("tema", rs.getString("titulo"));
+                    topic.put("id_tema", rs.getString("id_tema"));
+                    topic.put("video_tema", rs.getString("video_tema"));
+                    topic.put("subtema", rs.getString("subtitulo"));
+                    topic.put("id_subtema", rs.getString("id_subtema"));
+                    topic.put("descripcion", rs.getString("descripcion"));
                     arr.put(topic);
                 }while(rs.next());
               

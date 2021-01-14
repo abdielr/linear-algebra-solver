@@ -5,6 +5,7 @@
  */
 package models;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +27,37 @@ public class Excercise {
     public Excercise() throws SQLException, ClassNotFoundException {
         SQL = new DBConnection();
         con = SQL.conectar();
+    }
+
+    public JSONObject uploadExcercices(String title, InputStream imageURL, String description,
+            InputStream aURL, InputStream bURL, InputStream cURL, InputStream dURL,
+            String answer, String id_topic, String id_subtopic) {
+        JSONObject data = new JSONObject();
+        try {
+
+            String query = "insert into ejercicio(titulo , imagen, a, b, c, d, respuesta, descripcion,"
+                    + "id_tema, id_sub ) values (?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement ps;
+            ps = con.prepareStatement(query);
+            ps.setString(1, title);
+            ps.setBlob(2, imageURL);
+            ps.setBlob(3, aURL);
+            ps.setBlob(4, bURL);
+            ps.setBlob(5, cURL);
+            ps.setBlob(6, dURL);
+            ps.setString(7, answer);
+            ps.setString(8, description);
+            ps.setString(9, id_topic);
+            ps.setString(10, id_subtopic);
+            ps.execute();
+            data.put("state", 200);
+            data.put("message", "Ejercicio creado correctamente.");
+        } catch (SQLException ex) {
+            data.put("state", 500);
+            data.put("message", "Error al crear ejercicio.");
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
     }
 
     public JSONObject getExcercices() {
@@ -55,7 +87,7 @@ public class Excercise {
                 JSONArray arr = new JSONArray();
                 do {
                     JSONObject excercise = new JSONObject();
-                    
+
                     excercise.put("Titulo", rs.getString("Titulo"));
                     excercise.put("Descripcion", rs.getString("Descripcion"));
                     excercise.put("Imagen", rs.getString("Imagen"));
@@ -65,8 +97,8 @@ public class Excercise {
                     options.put("c", rs.getString("c"));
                     options.put("d", rs.getString("d"));
                     options.put("respuesta", rs.getString("Respuesta"));
-                    
-                    excercise.put("Opciones",options);
+
+                    excercise.put("Opciones", options);
                     excercise.put("Tema", rs.getString("Tema"));
                     excercise.put("Subtema", rs.getString("Subtema"));
                     arr.put(excercise);
