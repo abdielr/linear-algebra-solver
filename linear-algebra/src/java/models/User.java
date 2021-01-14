@@ -36,8 +36,7 @@ public class User {
             ps.setString(2,password);
             ResultSet rs = ps.executeQuery();
             if(rs.first()){
-                System.out.println(rs.getString(1));
-                System.out.println(rs.getString(2));
+                
                 JSONObject user = new JSONObject();
                 user.put("name",rs.getString(2));
                 user.put("paterno",rs.getString(3));
