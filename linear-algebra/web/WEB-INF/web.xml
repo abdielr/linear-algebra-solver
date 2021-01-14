@@ -30,7 +30,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>getAllTopics</servlet-name>
-        <url-pattern>/api/subjects/getTopics</url-pattern>
+        <url-pattern>/api/topics/getAllTopics</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>getAllExcercices</servlet-name>
