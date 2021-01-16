@@ -28,6 +28,10 @@
         <servlet-name>getExcerciseById</servlet-name>
         <servlet-class>controllers.excercise.getExcerciseById</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getTopics</servlet-name>
+        <servlet-class>controllers.topic.getTopics</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/api/SignUp</url-pattern>
@@ -51,6 +55,10 @@
     <servlet-mapping>
         <servlet-name>getExcerciseById</servlet-name>
         <url-pattern>/api/excercices/getExcerciseById</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getTopics</servlet-name>
+        <url-pattern>/api/topics/getTopics</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
