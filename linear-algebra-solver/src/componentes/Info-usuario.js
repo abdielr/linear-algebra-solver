@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Container, Image, Row, Col} from 'react-bootstrap'
-import { BsChevronCompactDown, BsChevronCompactUp } from "react-icons/bs";
+import { BsChevronCompactDown, BsChevronCompactUp} from "react-icons/bs"
 import user from '../images/user.png'
 
 

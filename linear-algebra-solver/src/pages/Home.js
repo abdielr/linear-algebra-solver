@@ -2,7 +2,8 @@ import React from 'react'
 import {Container, Row, Col} from 'react-bootstrap'
 import User from '../componentes/Info-usuario'
 //import Contestados from '../componentes/Contestados-ejercicios'
-import ListaEjercicios from '../componentes/Lista-ejercicios'
+//import ListaEjercicios from '../componentes/Lista-ejercicios'
+import Ejercicio from '../componentes/Ejercicio'
 import '../css/home.css'
 
 class Home extends React.Component{
@@ -70,7 +71,8 @@ class Home extends React.Component{
                     <Col>
                         <Container fluid className="cont-ejer my-3 pt-2 pb-4">
                             <h2>Ejercicios disponibles</h2>
-                            <ListaEjercicios ejercicios={this.state.ejercicios}/>
+                            {/*<ListaEjercicios ejercicios={this.state.ejercicios}/>*/}
+                            <Ejercicio />
                         </Container>
                     </Col>
                 </Row>

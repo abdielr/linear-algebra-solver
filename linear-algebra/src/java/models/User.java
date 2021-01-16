@@ -65,13 +65,14 @@ public class User {
        
         try {
              
-          String query = "insert into usuario( nombre, paterno, materno, password ) values (?,?,?,?)";
+          String query = "insert into usuario( nombre, paterno, password , username, materno ) values (?,?,?,?,?)";
             PreparedStatement ps;
             ps = con.prepareStatement(query);
-            ps.setString(1,name);
+            ps.setString(1, name);
             ps.setString(2, paterno);
-            ps.setString(3, materno);
-            ps.setString(4, password);
+            ps.setString(3, password);
+            ps.setString(4, username);
+            ps.setString(5, materno);
             
             ps.execute();
             data.put("state",200);

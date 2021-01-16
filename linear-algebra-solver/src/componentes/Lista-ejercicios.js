@@ -6,6 +6,7 @@ const Lista_ejercicios = (props) => {
     return(
 
         <React.Fragment>
+            <h2>Ejercicios disponibles</h2>
             {props.ejercicios.map((eje) => {
                 return(
                     <Container key={eje.key} fluid className="cont-ejer-indiv">

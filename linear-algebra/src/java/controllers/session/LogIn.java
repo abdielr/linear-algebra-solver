@@ -46,7 +46,34 @@ public class LogIn extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        String username =  request.getParameter("username");
+        String password =  request.getParameter("password");
         
+
+        try {
+            
+            User u = new User();
+            JSONObject data = u.LogIn(username, password);
+            response.addHeader("Access-Control-Allow-Origin", "*");
+            response.addHeader("Access-Control-Allow-Methods", "POST, GET");
+            response.addHeader("Access-Control-Allow-Headers", "Content-Typet");
+            response.addHeader("Access-Control-Max-Age", "1728000");
+            response.addHeader ("Acceso-Control-Permitir-Origen", "*");
+            response.setHeader("Cache-control", "no-cache, no-store");
+            response.setHeader("Pragma", "no-cache");
+            response.setHeader("Expires", "-1");
+            response.getWriter().print(data);
+            response.getWriter().flush();
+
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SignUp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -70,7 +97,14 @@ public class LogIn extends HttpServlet {
             
             User u = new User();
             JSONObject data = u.LogIn(username, password);
-            response.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+            response.addHeader("Access-Control-Allow-Origin", "*");
+            response.addHeader("Access-Control-Allow-Methods", "POST, GET");
+            response.addHeader("Access-Control-Allow-Headers", "Content-Typet");
+            response.addHeader("Access-Control-Max-Age", "1728000");
+            response.addHeader ("Acceso-Control-Permitir-Origen", "*");
+            response.setHeader("Cache-control", "no-cache, no-store");
+            response.setHeader("Pragma", "no-cache");
+            response.setHeader("Expires", "-1");
             response.getWriter().print(data);
             response.getWriter().flush();
 
