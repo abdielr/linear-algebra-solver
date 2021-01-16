@@ -65,6 +65,9 @@ public class getAllExcercices extends HttpServlet {
        response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+        response.addHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
 
         try {
             Excercise e = new Excercise();   

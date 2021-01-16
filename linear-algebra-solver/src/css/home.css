@@ -60,3 +60,11 @@ a:visited, a:link, a:focus, a:over, a:active, a:hover{
     color:#ED2553;
 }
 
+.lista_op ul li{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.display_video{
+    min-height: 400px;
+}
