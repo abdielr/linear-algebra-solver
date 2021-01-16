@@ -38,10 +38,11 @@ public class User {
             if(rs.first()){
                 
                 JSONObject user = new JSONObject();
-                user.put("name",rs.getString(2));
-                user.put("paterno",rs.getString(3));
-                user.put("materno",rs.getString(6));
-                user.put("username", rs.getString(5));
+                user.put("name",rs.getString("nombre"));
+                user.put("paterno",rs.getString("paterno"));
+                user.put("materno",rs.getString("materno"));
+                user.put("username", rs.getString("username"));
+                user.put("id_usuario",rs.getString("id_user"));
                 
                 data.put("user", user);
                 data.put("state",200);

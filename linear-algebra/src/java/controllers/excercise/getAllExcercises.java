@@ -23,7 +23,7 @@ import org.json.JSONObject;
  *
  * @author abyki
  */
-public class getAllExcercices extends HttpServlet {
+public class getAllExcercises extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

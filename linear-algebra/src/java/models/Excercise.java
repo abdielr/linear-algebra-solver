@@ -6,12 +6,15 @@
 package models;
 
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -27,6 +30,95 @@ public class Excercise {
     public Excercise() throws SQLException, ClassNotFoundException {
         SQL = new DBConnection();
         con = SQL.conectar();
+    }
+
+    public JSONObject getExcerciseById(String id_excercise) {
+        JSONObject data = new JSONObject();
+        String query = "SELECT EJERCICIO.TITULO AS TITULO,\n"
+                + "            	EJERCICIO.DESCRIPCION AS DESCRIPCION,\n"
+                + "              	EJERCICIO.IMAGEN AS IMAGEN,\n"
+                + "                     EJERCICIO.A AS A,\n"
+                + "                   EJERCICIO.B AS B,\n"
+                + "              EJERCICIO.C AS C,\n"
+                + "                   EJERCICIO. D AS D,\n"
+                + "                      EJERCICIO.RESPUESTA AS RESPUESTA,\n"
+                + "            	TEMA.TITULO AS TEMA,\n"
+                + "                     SUBTEMA.TITULO AS SUBTEMA\n"
+                + "                FROM EJERCICIO\n"
+                + "LEFT JOIN TEMA ON EJERCICIO.ID_TEMA = TEMA.ID_TEMA\n"
+                + "LEFT JOIN SUBTEMA ON SUBTEMA.ID_SUBTEMA = TEMA.ID_TEMA\n"
+                + "WHERE id_ejercicio = ?;\n";
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, id_excercise);
+            ResultSet rs = ps.executeQuery();
+            JSONObject excercise = new JSONObject();
+
+            if (rs.next()) {
+                do {
+                    excercise.put("titulo", rs.getString("Titulo"));
+                    excercise.put("descripcion", rs.getString("Descripcion"));
+                    String encodedA,encodedB,encodedC,encodedD,encodedImage;
+                    if (rs.getBlob("a") != null) {
+                        encodedA = Base64.getEncoder().encodeToString(rs.getBlob("a").getBytes(1, (int) rs.getBlob("a").length()));
+
+                    } else {
+                        encodedA = "";
+                    }
+                    if (rs.getBlob("b") != null) {
+                        encodedB = Base64.getEncoder().encodeToString(rs.getBlob("b").getBytes(1, (int) rs.getBlob("b").length()));
+
+                    } else {
+                        encodedB = "";
+                    }
+                    if (rs.getBlob("c") != null) {
+                         encodedC = Base64.getEncoder().encodeToString(rs.getBlob("c").getBytes(1, (int) rs.getBlob("c").length()));
+
+                    } else {
+                        encodedC = "";
+                    }
+                    if (rs.getBlob("d") != null) {
+                        encodedD = Base64.getEncoder().encodeToString(rs.getBlob("d").getBytes(1, (int) rs.getBlob("d").length()));
+
+                    } else {
+                        encodedD = "";
+                    }
+                    if (rs.getBlob("imagen") != null) {
+                        encodedImage = Base64.getEncoder().encodeToString(rs.getBlob("imagen").getBytes(1, (int) rs.getBlob("imagen").length()));
+
+                    } else {
+                        encodedImage = "";
+                    }
+
+                    JSONObject options = new JSONObject();
+                    options.put("a", encodedA);
+                    options.put("b", encodedB);
+                    options.put("c", encodedC);
+                    options.put("d", encodedD);
+                    options.put("imagen", encodedImage);
+                    options.put("respuesta", rs.getString("Respuesta"));
+
+                    excercise.put("opciones", options);
+                    excercise.put("tema", rs.getString("Tema"));
+                    excercise.put("subtema", rs.getString("Subtema"));
+                } while (rs.next());
+                data.put("ejercicio", excercise);
+                data.put("state", 200);
+                data.put("message", "Ejercicio encontrados.");
+            } else {
+                data.put("state", 404);
+                data.put("message", "Ejercicio no encontrado.");
+                return data;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Excercise.class.getName()).log(Level.SEVERE, null, ex);
+
+            data.put("state", 500);
+            data.put("message", "Error al obtener ejercicio.");
+        }
+
+        return data;
     }
 
     public JSONObject uploadExcercices(String title, InputStream imageURL, String description,
@@ -88,19 +180,54 @@ public class Excercise {
                 do {
                     JSONObject excercise = new JSONObject();
 
-                    excercise.put("Titulo", rs.getString("Titulo"));
-                    excercise.put("Descripcion", rs.getString("Descripcion"));
-                    excercise.put("Imagen", rs.getString("Imagen"));
+                    excercise.put("titulo", rs.getString("Titulo"));
+                    excercise.put("descripcion", rs.getString("Descripcion"));
+                    
                     JSONObject options = new JSONObject();
-                    options.put("a", rs.getString("a"));
-                    options.put("b", rs.getString("b"));
-                    options.put("c", rs.getString("c"));
-                    options.put("d", rs.getString("d"));
+                    
+                    String encodedA,encodedB,encodedC,encodedD,encodedImage;
+                    if (rs.getBlob("a") != null) {
+                        encodedA = Base64.getEncoder().encodeToString(rs.getBlob("a").getBytes(1, (int) rs.getBlob("a").length()));
+
+                    } else {
+                        encodedA = "";
+                    }
+                    if (rs.getBlob("b") != null) {
+                        encodedB = Base64.getEncoder().encodeToString(rs.getBlob("b").getBytes(1, (int) rs.getBlob("b").length()));
+
+                    } else {
+                        encodedB = "";
+                    }
+                    if (rs.getBlob("c") != null) {
+                         encodedC = Base64.getEncoder().encodeToString(rs.getBlob("c").getBytes(1, (int) rs.getBlob("c").length()));
+
+                    } else {
+                        encodedC = "";
+                    }
+                    if (rs.getBlob("d") != null) {
+                        encodedD = Base64.getEncoder().encodeToString(rs.getBlob("d").getBytes(1, (int) rs.getBlob("d").length()));
+
+                    } else {
+                        encodedD = "";
+                    }
+                    if (rs.getBlob("imagen") != null) {
+                        encodedImage = Base64.getEncoder().encodeToString(rs.getBlob("imagen").getBytes(1, (int) rs.getBlob("imagen").length()));
+
+                    } else {
+                        encodedImage = "";
+                    }
+                    
+                    
+                    options.put("a", encodedA);
+                    options.put("b", encodedB);
+                    options.put("c", encodedC);
+                    options.put("d", encodedD);
+                    excercise.put("imagen", encodedImage);
                     options.put("respuesta", rs.getString("Respuesta"));
 
-                    excercise.put("Opciones", options);
-                    excercise.put("Tema", rs.getString("Tema"));
-                    excercise.put("Subtema", rs.getString("Subtema"));
+                    excercise.put("opciones", options);
+                    excercise.put("tema", rs.getString("Tema"));
+                    excercise.put("subtema", rs.getString("Subtema"));
                     arr.put(excercise);
                 } while (rs.next());
 
@@ -108,7 +235,7 @@ public class Excercise {
                 data.put("state", 200);
                 data.put("message", "Ejercicios encontrados.");
             } else {
-                data.put("state", 200);
+                data.put("state", 404);
                 data.put("message", "No hay ejercicios");
             }
         } catch (SQLException ex) {

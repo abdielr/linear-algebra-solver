@@ -18,11 +18,15 @@
     </servlet>
     <servlet>
         <servlet-name>getAllExcercices</servlet-name>
-        <servlet-class>controllers.excercise.getAllExcercices</servlet-class>
+        <servlet-class>controllers.excercise.getAllExcercises</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>uploadExcercise</servlet-name>
         <servlet-class>controllers.excercise.uploadExcercise</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getExcerciseById</servlet-name>
+        <servlet-class>controllers.excercise.getExcerciseById</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
@@ -43,6 +47,10 @@
     <servlet-mapping>
         <servlet-name>uploadExcercise</servlet-name>
         <url-pattern>/api/excercices/uploadExcercise</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getExcerciseById</servlet-name>
+        <url-pattern>/api/excercices/getExcerciseById</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
