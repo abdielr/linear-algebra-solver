@@ -69,7 +69,7 @@ public class getTopics extends HttpServlet {
         try {
 
             Topic t = new Topic();
-            JSONObject data = t.getTopics();
+            JSONObject data = t.getOnlyTopics();
 
             response.getWriter().print(data);
             response.getWriter().flush();
