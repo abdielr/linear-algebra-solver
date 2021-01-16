@@ -34,7 +34,8 @@ public class Excercise {
 
     public JSONObject getExcerciseById(String id_excercise) {
         JSONObject data = new JSONObject();
-        String query = "SELECT EJERCICIO.TITULO AS TITULO,\n"
+        String query = "SELECT EJERCICIO.ID_EJERCICIO AS ID_EJERCICIO, "
+                + "EJERCICIO.TITULO AS TITULO,\n"
                 + "            	EJERCICIO.DESCRIPCION AS DESCRIPCION,\n"
                 + "              	EJERCICIO.IMAGEN AS IMAGEN,\n"
                 + "                     EJERCICIO.A AS A,\n"
@@ -58,6 +59,7 @@ public class Excercise {
                 do {
                     excercise.put("titulo", rs.getString("Titulo"));
                     excercise.put("descripcion", rs.getString("Descripcion"));
+                     excercise.put("id_ejercicio", rs.getString("id_ejercicio"));
                     String encodedA,encodedB,encodedC,encodedD,encodedImage;
                     if (rs.getBlob("a") != null) {
                         encodedA = Base64.getEncoder().encodeToString(rs.getBlob("a").getBytes(1, (int) rs.getBlob("a").length()));
@@ -155,7 +157,8 @@ public class Excercise {
     public JSONObject getExcercices() {
 
         JSONObject data = new JSONObject();
-        String query = "SELECT EJERCICIO.TITULO AS TITULO,\n"
+        String query = "SELECT EJERCICIO.ID_EJERCICIO AS ID_EJERCICIO,"
+                + "             EJERCICIO.TITULO AS TITULO,\n"
                 + "		EJERCICIO.DESCRIPCION AS DESCRIPCION,\n"
                 + "		EJERCICIO.IMAGEN AS IMAGEN,\n"
                 + "        EJERCICIO.A AS A,\n"
@@ -181,6 +184,7 @@ public class Excercise {
                     JSONObject excercise = new JSONObject();
 
                     excercise.put("titulo", rs.getString("Titulo"));
+                    excercise.put("id_ejercicio", rs.getString("id_ejercicio"));
                     excercise.put("descripcion", rs.getString("Descripcion"));
                     
                     JSONObject options = new JSONObject();
