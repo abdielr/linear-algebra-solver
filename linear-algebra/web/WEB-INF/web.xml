@@ -32,6 +32,14 @@
         <servlet-name>getTopics</servlet-name>
         <servlet-class>controllers.topic.getTopics</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deleteExcerciseById</servlet-name>
+        <servlet-class>controllers.excercise.deleteExcerciseById</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getExcerciseByIdTopic</servlet-name>
+        <servlet-class>controllers.excercise.getExcerciseByIdTopic</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/api/SignUp</url-pattern>
@@ -59,6 +67,14 @@
     <servlet-mapping>
         <servlet-name>getTopics</servlet-name>
         <url-pattern>/api/topics/getTopics</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteExcerciseById</servlet-name>
+        <url-pattern>/api/excercises/deleteExcerciseById</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getExcerciseByIdTopic</servlet-name>
+        <url-pattern>/api/excercises/getExcerciseByIdTopic</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

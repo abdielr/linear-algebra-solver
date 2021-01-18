@@ -62,11 +62,14 @@ DROP TABLE IF EXISTS `scoreboard`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `scoreboard` (
-  `id_user` int(11) DEFAULT NULL,
-  `evaluacion` varchar(45) DEFAULT NULL,
-  `fecha` datetime DEFAULT NULL,
-  KEY `id_usr_idx` (`id_user`),
-  CONSTRAINT `id_usr` FOREIGN KEY (`id_user`) REFERENCES `usuario` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `id_scoreboard` int(11) NOT NULL,
+  `evaluacion` int(11) DEFAULT NULL,
+  `fecha` datetime DEFAULT CURRENT_TIMESTAMP,
+  `id_ejercicio` varchar(45) DEFAULT NULL,
+  `id_usuario` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_scoreboard`),
+  KEY `id_usr_idx` (`id_scoreboard`),
+  CONSTRAINT `id_usr` FOREIGN KEY (`id_scoreboard`) REFERENCES `usuario` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -171,4 +174,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-16 14:08:28
+-- Dump completed on 2021-01-17 23:31:46
