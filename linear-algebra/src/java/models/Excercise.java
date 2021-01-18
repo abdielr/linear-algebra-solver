@@ -92,15 +92,13 @@ public class Excercise {
                         encodedImage = "";
                     }
 
-                    JSONObject options = new JSONObject();
-                    options.put("a", encodedA);
-                    options.put("b", encodedB);
-                    options.put("c", encodedC);
-                    options.put("d", encodedD);
-                    options.put("imagen", encodedImage);
-                    options.put("respuesta", rs.getString("Respuesta"));
+                    excercise.put("a", encodedA);
+                    excercise.put("b", encodedB);
+                    excercise.put("c", encodedC);
+                    excercise.put("d", encodedD);
+                    excercise.put("imagen", encodedImage);
+                    excercise.put("respuesta", rs.getString("Respuesta"));
 
-                    excercise.put("opciones", options);
                     excercise.put("tema", rs.getString("Tema"));
                     excercise.put("subtema", rs.getString("Subtema"));
                 } while (rs.next());

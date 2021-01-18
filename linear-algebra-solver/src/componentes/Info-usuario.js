@@ -15,12 +15,12 @@ const Info_usuario = (props) => {
                     <Image src={user} roundedCircle width="120%" />
                 </Col>
                 <Col xl={9} className="mt-2">
-                    <b>Nombre:</b> {props.user.name}
+                    <p className="opc_menu"><b>Nombre:</b> {props.user.name}</p>
                 </Col>
             </Row>
             <Row>
                 <Col xl={12} className="my-2">
-                    <b>Usuario:</b> {props.user.username}
+                    <p className="opc_menu"><b>Usuario:</b> {props.user.username}</p>
                 </Col>
             </Row>
             <Row>
@@ -41,9 +41,9 @@ const Info_usuario = (props) => {
                                 }} /></div>
                             </Container>
                             <Container fluid className="linea"></Container>
-                            <Container className="py-2">
+                            <Container className="py-2 opc_menu">
                                 {
-                                    props.admin &&
+                                    props.admin === 1 &&
                                     <React.Fragment>
                                         Opciones
                                         <ul>
@@ -54,23 +54,26 @@ const Info_usuario = (props) => {
                                     </React.Fragment>
                                 }
                                 {
-                                    props.admin === false &&
+                                    props.admin === 0 &&
                                     <React.Fragment>
                                         Temas
                                         <ul>
-                                            <li className="btn_menu" onClick={props.obtenEjercicioTema}>
-                                                Vectores
-                                            </li>
-                                            <li className="btn_menu" onClick={props.obtenEjercicioTema}>
-                                                Matrices
-                                            </li>
+                                            {
+                                                props.temas.map(tem => {
+                                                    return(
+                                                        <li key={tem.id_tema} name={tem.id_tema} className="btn_menu" onClick={props.obtenEjercicioTema}>
+                                                            {tem.titulo}
+                                                        </li>
+                                                    )
+                                                })
+                                            }
                                         </ul>
                                     </React.Fragment>
                                 }
                             </Container>
                             <Container fluid className="linea"></Container>
                             <Container className="py-2">
-                                <div className="btn_logout" onClick={() => {
+                                <div className="btn_logout opc_menu" onClick={() => {
                                     window.localStorage.removeItem("APP_USER")
                                     window.location.href = '/'
                                 }}>Cerrar sesion</div>

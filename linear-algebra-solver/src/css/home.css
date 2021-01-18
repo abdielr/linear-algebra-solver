@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&family=Yusei+Magic&display=swap');
+
 ul, ol{
 	list-style: none;
 }
@@ -14,6 +16,20 @@ a{
 
 b{
     color:#ED2553;
+    font-family: 'Roboto Slab', serif;
+}
+
+h4, h3{
+    font-family: 'Roboto Slab', serif;
+    font-weight: 400;
+}
+
+.opc_menu{
+    font-family: 'Quicksand', sans-serif;
+}
+
+h2{
+    font-family: 'Yusei Magic', sans-serif;
 }
 
 a:visited, a:link, a:focus, a:over, a:active, a:hover{

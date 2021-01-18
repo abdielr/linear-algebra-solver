@@ -66,9 +66,10 @@ class Login extends React.Component{
                 self.setState({
                     res: { data: result }
                 })
-                //console.log(self.state.res.data)  
+                //console.log(self.state.res.data.user.nivel)  
                 //var d = JSON.stringify(self.state.res.data)
                 window.localStorage.setItem("APP_USER", JSON.stringify(self.state.res.data))
+                window.localStorage.setItem("APP_LEVEL", JSON.stringify(self.state.res.data.user.nivel))
                 //console.log(JSON.parse(window.localStorage.getItem("APP_USER")))
                 window.location.href = '/home'
             },

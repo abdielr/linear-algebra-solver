@@ -43,6 +43,7 @@ public class User {
                 user.put("materno",rs.getString("materno"));
                 user.put("username", rs.getString("username"));
                 user.put("id_usuario",rs.getString("id_user"));
+                user.put("nivel", rs.getInt("nivel") );
                 
                 data.put("user", user);
                 data.put("state",200);

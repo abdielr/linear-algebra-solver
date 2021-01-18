@@ -12,7 +12,7 @@ const Lista_ejercicios = (props) => {
             }
             {props.ejercicios.map((eje) => {
                 return (
-                    <Container id={eje.key} key={eje.key} fluid className="cont-ejer-indiv">
+                    <Container id={eje.id_ejercicio} key={eje.id_ejercicio} fluid className="cont-ejer-indiv">
 
                         <div className="d-flex">
 
@@ -22,25 +22,25 @@ const Lista_ejercicios = (props) => {
                                 </div>
                                 <div className="d-flex py-2">
                                     <div className="w-50 pl-5">
-                                        <b>Tema:</b> {eje.tema}
+                                        <p className="opc_menu"><b>Tema:</b> {eje.tema}</p>
                                     </div>
                                     <div className="w-50">
-                                        <b>Subtema:</b> {eje.subtema}
+                                        <p className="opc_menu"><b>Subtema:</b> {eje.subtema}</p>
                                     </div>
                                 </div>
                             </div>
                             <div className="d-flex flex-column w-25 justify-content-center text-center">
                                 <InputGroup>
                                     {
-                                        props.admin &&
+                                        props.admin === 1 &&
                                         <React.Fragment>
-                                            <Button id={eje.key} variant="outline-success" size="sm" className="pl-3 w-25 mx-3" onClick={props.onClick}>Editar</Button>
-                                            <Button id={eje.key} variant="outline-danger" size="sm" className=" w-25 pl-3" onClick={props.onClick}>Eliminar</Button>
+                                            <Button id={eje.id_ejercicio} variant="outline-success" size="sm" className="pl-3 w-25 mx-3 opc_menu" onClick={props.onClick}>Editar</Button>
+                                            <Button id={eje.id_ejercicio} variant="outline-danger" size="sm" className=" w-25 pl-3 opc_menu" onClick={props.onClick}>Eliminar</Button>
                                         </React.Fragment>
                                     }
                                     {
-                                        props.admin === false &&
-                                        <Button id={eje.key} key={eje.key} variant="outline-success" size="sm" className="w-50 pl-3" onClick={props.responder}>Resolver</Button>
+                                        props.admin === 0 &&
+                                        <Button id={eje.id_ejercicio} key={eje.id_ejercicio} variant="outline-success" size="sm" className="w-50 pl-3 opc_menu" onClick={props.responder}>Resolver</Button>
                                     }
                                 </InputGroup>
                             </div>

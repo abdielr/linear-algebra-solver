@@ -52,7 +52,36 @@ public class uploadExcercise extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+        response.addHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
 
+
+        Excercise e;
+        JSONObject data = new JSONObject();
+        try {
+            e = new Excercise();
+            String title = request.getParameter("titulo");
+            String descriptionn = request.getParameter("descripcion");
+            String answer = request.getParameter("respuesta");
+            String id_topic = request.getParameter("id_tema");
+            String id_subtopic = request.getParameter("id_subtema");
+            InputStream image = request.getPart("imagen").getInputStream();
+            InputStream a = request.getPart("a").getInputStream();
+            InputStream b = request.getPart("b").getInputStream();
+            InputStream c = request.getPart("c").getInputStream();
+            InputStream d = request.getPart("d").getInputStream();
+            data = e.uploadExcercices(title, image, descriptionn, a, b, c, d, answer, id_topic, id_subtopic);
+        } catch (SQLException ex) {
+            Logger.getLogger(uploadExcercise.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(uploadExcercise.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        response.getWriter().print(data);
+        response.getWriter().flush();
     }
 
     /**
@@ -69,6 +98,10 @@ public class uploadExcercise extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+        response.addHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
+
 
         Excercise e;
         JSONObject data = new JSONObject();

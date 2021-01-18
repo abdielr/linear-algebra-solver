@@ -7,7 +7,7 @@ const Crear_ejercicio = (props) => {
         <React.Fragment>
             <h2>Crear ejercicio</h2>
             <Container fluid className="px-5">
-                <Form className="mt-3">
+                <Form className="mt-3 opc_menu" d="uploadbanner" encType="multipart/form-data" method="post" id="fileinfo">
                     <Form.Group>
                         <Form.Label>Titulo</Form.Label>
                         <Form.Control name="titulo" type="text" placeholder="Titulo" required onChange={props.onChange}/>
@@ -21,8 +21,14 @@ const Crear_ejercicio = (props) => {
                             <Form.Group>
                                 <Form.Label>Tema</Form.Label>
                                 <Form.Control name="id_tema" as="select" required onChange={props.onChange}>
-                                    <option>Vectores</option>
-                                    <option>Matrices</option>
+                                    <option>Escoga un tema</option>
+                                    {
+                                        props.temas.map(tem => {
+                                            return(
+                                                <option key={tem.id_tema} value={tem.id_tema}>{tem.titulo}</option>
+                                            )
+                                        })
+                                    }
                                 </Form.Control>
                             </Form.Group>
                         </Col>
@@ -30,10 +36,14 @@ const Crear_ejercicio = (props) => {
                             <Form.Group>
                                 <Form.Label>Subtema</Form.Label>
                                 <Form.Control name="id_subtema" as="select" required onChange={props.onChange}>
-                                    <option>Suma</option>
-                                    <option>Resta</option>
-                                    <option>Multiplicación</option>
-                                    <option>División</option>
+                                    <option>Escoga un subtema</option>
+                                    {
+                                        props.subtemas.map(sub => {
+                                            return (
+                                                <option key={sub.id_subtema} value={sub.id_subtema}>{sub.subtema}</option>
+                                            )
+                                        })
+                                    }
                                 </Form.Control>
                             </Form.Group>
                         </Col>
@@ -59,6 +69,7 @@ const Crear_ejercicio = (props) => {
                     </Form.Group>
                     <Form.Group>
                         <Button variant="primary" onClick={props.onClick}>Crear</Button>
+                        <Button variant="danger" className="ml-5" onClick={props.cancelar}>Cancelar</Button>
                     </Form.Group>
                 </Form>
             </Container>

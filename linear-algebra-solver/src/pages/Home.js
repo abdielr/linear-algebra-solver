@@ -5,6 +5,7 @@ import User from '../componentes/Info-usuario'
 import ListaEjercicios from '../componentes/Lista-ejercicios'
 import Ejercicio from '../componentes/Ejercicio'
 import CrearEjercicio from '../componentes/Crear-ejercicio'
+import Error from '../componentes/Error'
 import '../css/home.css'
 import server from '../config-url'
 import $ from 'jquery'
@@ -15,9 +16,30 @@ class Home extends React.Component{
         super(props)
         this.state = {
             data: JSON.parse(window.localStorage.getItem("APP_USER")),
-            admin: false,
+            admin: parseInt(window.localStorage.getItem("APP_LEVEL"), 10),
             vista: 0,
-            ejercicios: [
+            ejercicios: {                                                                                                   
+                respuesta: [],
+                ejer: []
+            },
+            ejercicioSeleccionado: [],
+            temas: [],
+            subtemas: [],
+            ejercicioCreado: {
+                titulo: "",
+                descripcion: "",
+                id_tema: "",
+                id_subtema: "",
+                imagen: "",
+                a: "",
+                b: "",
+                c: "",
+                d: "",
+                respuesta: ""
+            }
+        }
+        
+    } /*[
                 {
                     "key": 1,
                     "titulo":"Ejercicio 1",
@@ -48,27 +70,10 @@ class Home extends React.Component{
                     "tema": "Martices",
                     "subtema": "Inversa de matriz"
                 }
-            ],
-            ejercicioCreado: {
-                titulo: "",
-                descripcion: "",
-                id_tema: "",
-                id_subtema: "",
-                imagen: "",
-                a: "",
-                b: "",
-                c: "",
-                d: "",
-                respuesta: ""
-            },
-            ejemplo: []
-        }
-        
-    }
+            ] */
 
     componentDidMount(){
-        //console.log(this.props.match.params.data)
-        /*var self = this
+        var self = this
         var url = server + 'excercises/getAllExcercices'
         $.ajax({
             type: "POST",
@@ -77,35 +82,105 @@ class Home extends React.Component{
             dataType: 'json',
             success: function (result) {
                 self.setState({
-                    ejemplo: result
+                    ejercicios:{
+                        respuesta: {'state': result.state,
+                                    'message': result.message},
+                        ejer: result.topics
+                    }
                 })
-                console.log(result)
-                //var d = JSON.stringify(self.state.res.data)
-                //console.log(JSON.parse(window.localStorage.getItem("APP_USER")))
+                //console.log(self.state.ejercicios)
             },
             error: function (result) {
                 self.setState({ error: result })
             }
-        })*/
+        })
+        url = server + 'topics/getTopics'
+        $.ajax({
+            type: "POST",
+            url: url,
+            crossDomain: true,
+            dataType: 'json',
+            success: function (result) {
+                //console.log(result.temas)
+                self.setState({
+                    temas: result.temas
+                })
+            },
+            error: function (result) {
+                self.setState({ error: result })
+            }
+        })
+        url = server + 'topics/getAllTopics'
+        $.ajax({
+            type: "POST",
+            url: url,
+            crossDomain: true,
+            dataType: 'json',
+            success: function (result) {
+                //console.log(result.topics)
+                self.setState({
+                    subtemas: result.topics
+                })
+            },
+            error: function (result) {
+                self.setState({ error: result })
+            }
+        })
     }
 
     handleVistaCrearEjercicio = () => {
-        console.log("Si entra")
         this.setState({
             vista: 1
         })
     }
 
-    enviarEjercicioCreado = () => {
-        this.setState({
-            vista: 0
+    enviarEjercicioCreado = async() => {
+        var fd = new FormData(document.getElementById("fileinfo"));
+        var self = this
+        var url = server + 'excercices/uploadExcercise'
+        $.ajax({
+            type: "POST",
+            url: url,
+            crossDomain: true,
+            dataType: 'json',
+            processData: false,  
+            contentType: false,
+            data: fd,
+            success: function (result) {
+                console.log(result)
+                self.setState({
+                    vista: 0
+                })
+            },
+            error: function (result) {
+                self.setState({ error: result })
+            }
         })
     }
 
-    handleVistaEjercicio = () => {
-        this.setState({
-            vista: 2
+    handleVistaEjercicio = (e) => {
+        var self = this
+        var url = server + 'excercices/getExcerciseById?id_ejercicio=' + e.target.id
+        $.ajax({
+            type: "POST",
+            url: url,
+            crossDomain: true,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                //console.log(result.ejercicio)
+                self.setState({
+                    vista: 2,
+                    ejercicioSeleccionado: result.ejercicio
+                })
+                console.log(self.state.ejercicioSeleccionado)
+            },
+            error: function (result) {
+                self.setState({ error: result })
+            }
         })
+
     }
     
     handleChangeCrearEjercicio = (e) => {
@@ -136,6 +211,37 @@ class Home extends React.Component{
 
     }
 
+    handleObtenEjerciciosTema = () => {
+        var self = this
+        var url = server + 'topics/getAllTopics'
+        $.ajax({
+            type: "GET",
+            url: url,
+            crossDomain: true,
+            dataType: 'json',
+            success: function (result) {
+                console.log(result)
+            },
+            error: function (result) {
+                self.setState({ error: result })
+            }
+        })
+    }
+
+    handleBotonRegresoEjercicio = () => {
+        this.setState({
+            vista: 0
+        })
+    }
+
+    handleEnviarRespuestaEjercicio = () => {
+
+        this.setState({
+            vista: 0
+        })
+
+    }
+
     render(){
         return(
             <Container fluid className="cont-home">
@@ -146,7 +252,8 @@ class Home extends React.Component{
                                 <User {...this.state.data}
                                     admin={this.state.admin}
                                     crearEjercicio={this.handleVistaCrearEjercicio}
-                                    obtenEjercicioTema={this.handleObtieneTemas}/>
+                                    obtenEjercicioTema={this.handleObtenEjerciciosTema}
+                                    temas={this.state.temas}/>
                             </Col>
 
                             {/*<Col xl={12}>
@@ -158,19 +265,29 @@ class Home extends React.Component{
                         <Container fluid className="cont-ejer my-3 pt-2 pb-4">
                             {
                                 this.state.vista === 0 &&
-                                <ListaEjercicios ejercicios={this.state.ejercicios}
-                                    onClick={this.handleClick}
-                                    admin={this.state.admin}
-                                    responder={this.handleVistaEjercicio}/>
+                                (
+                                    this.state.ejercicios.state === 404 ? <Error status={this.state.ejercicios.respuesta.state} mensaje={this.state.ejercicios.respuesta.message}/> :
+                                    <ListaEjercicios ejercicios={this.state.ejercicios.ejer}
+                                        onClick={this.handleClick}
+                                        admin={this.state.admin}
+                                        responder={this.handleVistaEjercicio} /> 
+                                )
                             }
                             {
                                 this.state.vista === 1 &&
                                 <CrearEjercicio onClick={this.enviarEjercicioCreado}
-                                onChange={this.handleChangeCrearEjercicio}/>
+                                    onChange={this.handleChangeCrearEjercicio}
+                                    cancelar={this.handleBotonRegresoEjercicio}
+                                    temas={this.state.temas}
+                                    subtemas={this.state.subtemas}/>
                             }
                             {
                                 this.state.vista === 2 &&
-                                <Ejercicio />
+                                <Ejercicio 
+                                    regresar={this.handleBotonRegresoEjercicio}
+                                    enviar={this.handleEnviarRespuestaEjercicio}
+                                    admin={this.state.admin}
+                                    ejercicio={this.state.ejercicioSeleccionado}/>
                             }
                         </Container>
                     </Col>
