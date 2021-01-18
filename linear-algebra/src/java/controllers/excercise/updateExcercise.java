@@ -7,21 +7,16 @@ package controllers.excercise;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Excercise;
-import org.json.JSONObject;
 
 /**
  *
  * @author abyki
  */
-public class getExcerciseByIdTopic extends HttpServlet {
+public class updateExcercise extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,6 +27,8 @@ public class getExcerciseByIdTopic extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -44,7 +41,7 @@ public class getExcerciseByIdTopic extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+       
     }
 
     /**
@@ -64,20 +61,11 @@ public class getExcerciseByIdTopic extends HttpServlet {
         response.addHeader("Access-Control-Allow-Credentials", "true");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
         response.addHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
-
-        String id = request.getParameter("id_tema");
-        Excercise e;
-        try {
-            e = new Excercise();
-            JSONObject data = e.getExcerciseByIdTopic(id);
-            response.getWriter().print(data);
-            response.getWriter().flush();
-        } catch (SQLException ex) {
-            Logger.getLogger(getExcerciseById.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(getExcerciseById.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        String id_ejercicio = request.getParameter("id_ejercicio");
+        String titulo = request.getParameter("titulo");
+        String descripcion = request.getParameter("descripcion");
+        
+        
     }
 
     /**

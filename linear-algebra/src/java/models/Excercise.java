@@ -31,7 +31,26 @@ public class Excercise {
         SQL = new DBConnection();
         con = SQL.conectar();
     }
+    public JSONObject updateExcercise(String id, String titulo, String desc){
+        JSONObject data = new JSONObject();
 
+        try {
+            String query = "update ejercicio set titulo = ?, descripcion = ? where id_ejercicio = ? ";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, titulo);
+            ps.setString(2,desc);
+            ps.setString(3,id);
+            ps.execute();
+            data.put("state", 200);
+            data.put("message", "Ejercicio actualizado");
+        } catch (SQLException ex) {
+            data.put("state", 500);
+            data.put("message", "Error al actualizar el ejercicio.");
+            Logger.getLogger(Excercise.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return data;
+    }
     public JSONObject deleteExcerciseById(String id_excercise) {
         JSONObject data = new JSONObject();
 
