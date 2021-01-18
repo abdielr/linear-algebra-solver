@@ -67,6 +67,7 @@ public class deleteExcerciseById extends HttpServlet {
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
         response.addHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
         String id = request.getParameter("id_ejercicio");
+        System.out.println(id);
         Excercise e;
         try {
             e = new Excercise();

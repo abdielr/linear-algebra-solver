@@ -39,7 +39,7 @@ public class Excercise {
             String query = "delete from ejercicio where id_ejercicio = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, Integer.parseInt(id_excercise));
-            ps.executeQuery();
+            ps.execute();
             data.put("state", 200);
             data.put("message", "Ejercicio eliminado.");
         } catch (SQLException ex) {
