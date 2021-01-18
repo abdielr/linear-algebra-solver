@@ -125,28 +125,7 @@ class Home extends React.Component{
                 self.setState({ error: result })
             }
         })
-        url = server + 'excercises/getAllExcercices'
-        $.ajax({
-            type: "POST",
-            url: url,
-            crossDomain: true,
-            dataType: 'json',
-            success: function (result) {
-                self.setState({
-                    ejercicios: {
-                        respuesta: {
-                            'state': result.state,
-                            'message': result.message
-                        },
-                        ejer: result.topics
-                    }
-                })
-                //console.log(self.state.ejercicios)
-            },
-            error: function (result) {
-                self.setState({ error: result })
-            }
-        })
+        window.location.href = window.location.href
     }
 
     handleVistaEjercicio = (e) => {
@@ -243,21 +222,25 @@ class Home extends React.Component{
     }
 
     handleBorrarEjercicioPorId = (e) => {
-        console.log(e.target.id)
-        var self = this
-        var url = server + 'excercises/deleteExcerciseById?id_ejercicio=' + e.target.id
-        $.ajax({
-            type: "POST",
-            url: url,
-            crossDomain: true,
-            dataType: 'json',
-            success: function (result) {
-                alert(result.message)
-            },
-            error: function (result) {
-                self.setState({ error: result })
-            }
-        })
+        var op = window.confirm("¿Desea eliminar este ejercicio?\n\nAl hacer click en aceptar esta acción no se puede deshacer.")
+        if(op){
+            console.log(e.target.id)
+            var self = this
+            var url = server + 'excercises/deleteExcerciseById?id_ejercicio=' + e.target.id
+            $.ajax({
+                type: "POST",
+                url: url,
+                crossDomain: true,
+                dataType: 'json',
+                success: function (result) {
+                    alert(result.message)
+                },
+                error: function (result) {
+                    self.setState({ error: result })
+                }
+            })
+            window.location.href = window.location.href
+        }
     }
 
     render(){
