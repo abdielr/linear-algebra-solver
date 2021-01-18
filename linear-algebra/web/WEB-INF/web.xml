@@ -40,6 +40,14 @@
         <servlet-name>getExcerciseByIdTopic</servlet-name>
         <servlet-class>controllers.excercise.getExcerciseByIdTopic</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>score</servlet-name>
+        <servlet-class>controllers.scoreboard.score</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getScoreByIdUser</servlet-name>
+        <servlet-class>controllers.scoreboard.getScoreByIdUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/api/SignUp</url-pattern>
@@ -75,6 +83,14 @@
     <servlet-mapping>
         <servlet-name>getExcerciseByIdTopic</servlet-name>
         <url-pattern>/api/excercises/getExcerciseByIdTopic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>score</servlet-name>
+        <url-pattern>/api/scoreboard/score</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getScoreByIdUser</servlet-name>
+        <url-pattern>/api/scoreboard/getScoreByIdUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

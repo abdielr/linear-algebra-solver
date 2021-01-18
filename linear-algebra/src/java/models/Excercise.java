@@ -50,7 +50,8 @@ public class Excercise {
 
         return data;
     }
-        public JSONObject getExcerciseByIdTopic(String id_excercise) {
+
+    public JSONObject getExcerciseByIdTopic(String id_excercise) {
         JSONObject data = new JSONObject();
         String query = "SELECT EJERCICIO.ID_EJERCICIO AS ID_EJERCICIO, "
                 + "EJERCICIO.TITULO AS TITULO,\n"
@@ -73,10 +74,11 @@ public class Excercise {
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, id_excercise);
             ResultSet rs = ps.executeQuery();
-            JSONObject excercise = new JSONObject();
-
+           JSONArray arr = new JSONArray();
             if (rs.next()) {
                 do {
+                     JSONObject excercise = new JSONObject();
+
                     excercise.put("titulo", rs.getString("Titulo"));
                     excercise.put("descripcion", rs.getString("Descripcion"));
                     excercise.put("id_ejercicio", rs.getString("id_ejercicio"));
@@ -122,8 +124,9 @@ public class Excercise {
 
                     excercise.put("tema", rs.getString("Tema"));
                     excercise.put("subtema", rs.getString("Subtema"));
+                    arr.put(excercise);
                 } while (rs.next());
-                data.put("ejercicio", excercise);
+                data.put("ejercicios", arr);
                 data.put("state", 200);
                 data.put("message", "Ejercicio encontrados.");
             } else {
