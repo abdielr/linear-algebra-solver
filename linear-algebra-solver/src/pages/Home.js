@@ -39,38 +39,7 @@ class Home extends React.Component{
             }
         }
         
-    } /*[
-                {
-                    "key": 1,
-                    "titulo":"Ejercicio 1",
-                    "tema":"Vectores",
-                    "subtema":"Suma de vectores"
-                },
-                {
-                    "key": 2,
-                    "titulo": "Ejercicio 2",
-                    "tema": "Vectores",
-                    "subtema": "Resta de vectores"
-                },
-                {
-                    "key": 3,
-                    "titulo": "Ejercicio 3",
-                    "tema": "Matrices",
-                    "subtema": "Suma de matrices"
-                },
-                {
-                    "key": 4,
-                    "titulo": "Ejercicio 4",
-                    "tema": "Matrices",
-                    "subtema": "Determinante"
-                },
-                {
-                    "key": 5,
-                    "titulo": "Ejercicio 5",
-                    "tema": "Martices",
-                    "subtema": "Inversa de matriz"
-                }
-            ] */
+    } 
 
     componentDidMount(){
         var self = this
@@ -156,6 +125,28 @@ class Home extends React.Component{
                 self.setState({ error: result })
             }
         })
+        url = server + 'excercises/getAllExcercices'
+        $.ajax({
+            type: "POST",
+            url: url,
+            crossDomain: true,
+            dataType: 'json',
+            success: function (result) {
+                self.setState({
+                    ejercicios: {
+                        respuesta: {
+                            'state': result.state,
+                            'message': result.message
+                        },
+                        ejer: result.topics
+                    }
+                })
+                //console.log(self.state.ejercicios)
+            },
+            error: function (result) {
+                self.setState({ error: result })
+            }
+        })
     }
 
     handleVistaEjercicio = (e) => {
@@ -211,16 +202,25 @@ class Home extends React.Component{
 
     }
 
-    handleObtenEjerciciosTema = () => {
+    handleObtenEjerciciosTema = (e) => {
+        
         var self = this
-        var url = server + 'topics/getAllTopics'
+        var url = server + 'excercises/getExcerciseByIdTopic?id_tema=' + e.target.id
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: url,
             crossDomain: true,
             dataType: 'json',
             success: function (result) {
-                console.log(result)
+                self.setState({
+                    ejercicios: {
+                        respuesta: {
+                            'state': result.state,
+                            'message': result.message
+                        },
+                        ejer: result.topics
+                    }
+                })
             },
             error: function (result) {
                 self.setState({ error: result })
@@ -240,6 +240,24 @@ class Home extends React.Component{
             vista: 0
         })
 
+    }
+
+    handleBorrarEjercicioPorId = (e) => {
+        console.log(e.target.id)
+        var self = this
+        var url = server + 'excercises/deleteExcerciseById?id_ejercicio=' + e.target.id
+        $.ajax({
+            type: "POST",
+            url: url,
+            crossDomain: true,
+            dataType: 'json',
+            success: function (result) {
+                alert(result.message)
+            },
+            error: function (result) {
+                self.setState({ error: result })
+            }
+        })
     }
 
     render(){
@@ -270,7 +288,8 @@ class Home extends React.Component{
                                     <ListaEjercicios ejercicios={this.state.ejercicios.ejer}
                                         onClick={this.handleClick}
                                         admin={this.state.admin}
-                                        responder={this.handleVistaEjercicio} /> 
+                                        responder={this.handleVistaEjercicio}
+                                        borrar={this.handleBorrarEjercicioPorId}/> 
                                 )
                             }
                             {
@@ -287,7 +306,8 @@ class Home extends React.Component{
                                     regresar={this.handleBotonRegresoEjercicio}
                                     enviar={this.handleEnviarRespuestaEjercicio}
                                     admin={this.state.admin}
-                                    ejercicio={this.state.ejercicioSeleccionado}/>
+                                    ejercicio={this.state.ejercicioSeleccionado}
+                                    />
                             }
                         </Container>
                     </Col>

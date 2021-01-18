@@ -38,13 +38,13 @@ public class Excercise {
         try {
             String query = "delete from ejercicio where id_ejercicio = ?";
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, id_excercise);
+            ps.setInt(1, Integer.parseInt(id_excercise));
             ps.executeQuery();
             data.put("state", 200);
             data.put("message", "Ejercicio eliminado.");
         } catch (SQLException ex) {
             data.put("state", 500);
-            data.put("message", "Error al eliminar ejercicio.");
+            data.put("message", "Error al eliminar el ejercicio.");
             Logger.getLogger(Excercise.class.getName()).log(Level.SEVERE, null, ex);
         }
 

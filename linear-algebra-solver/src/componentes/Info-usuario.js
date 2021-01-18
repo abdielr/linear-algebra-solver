@@ -61,7 +61,7 @@ const Info_usuario = (props) => {
                                             {
                                                 props.temas.map(tem => {
                                                     return(
-                                                        <li key={tem.id_tema} name={tem.id_tema} className="btn_menu" onClick={props.obtenEjercicioTema}>
+                                                        <li key={tem.id_tema} id={tem.id_tema} name={tem.id_tema} className="btn_menu" onClick={props.obtenEjercicioTema}>
                                                             {tem.titulo}
                                                         </li>
                                                     )

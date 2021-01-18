@@ -49,11 +49,11 @@ public class User {
                 data.put("state",200);
                 data.put("message","Usuario encontrado.");
             }else{
-                data.put("state",200);
+                data.put("state",404);
                 data.put("message","Usuario no existe.");
             }
         } catch (SQLException ex) {
-            data.put("state",200);
+            data.put("state",404);
             data.put("message","Error al obtener usuario");
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -34,8 +34,8 @@ const Lista_ejercicios = (props) => {
                                     {
                                         props.admin === 1 &&
                                         <React.Fragment>
-                                            <Button id={eje.id_ejercicio} variant="outline-success" size="sm" className="pl-3 w-25 mx-3 opc_menu" onClick={props.onClick}>Editar</Button>
-                                            <Button id={eje.id_ejercicio} variant="outline-danger" size="sm" className=" w-25 pl-3 opc_menu" onClick={props.onClick}>Eliminar</Button>
+                                            <Button id={eje.id_ejercicio} variant="outline-success" size="sm" className="pl-3 w-25 mx-3 opc_menu" onClick={props.responder}>Editar</Button>
+                                            <Button id={eje.id_ejercicio} variant="outline-danger" size="sm" className=" w-25 pl-3 opc_menu" onClick={props.borrar}>Eliminar</Button>
                                         </React.Fragment>
                                     }
                                     {
