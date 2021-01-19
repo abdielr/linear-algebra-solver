@@ -27,14 +27,7 @@ const Info_usuario = (props) => {
                 <Container fluid className="linea"></Container>
 
                 {show ? (
-                    <Container fluid className="my-2 text-center">
-                        <div><BsChevronCompactDown className="btn_menu" onClick={() => {
-                            setShow(!show);
-                        }} /></div>
-
-                    </Container>
-                ) : (
-                        <React.Fragment>
+                    <React.Fragment>
                             <Container fluid className="my-2 text-center">
                                 <div><BsChevronCompactUp className="btn_menu" onClick={() => {
                                     setShow(!show);
@@ -45,10 +38,10 @@ const Info_usuario = (props) => {
                                 {
                                     props.admin === 1 &&
                                     <React.Fragment>
-                                        Opciones
+                                    Opciones
                                         <ul>
                                             <li className="btn_menu" onClick={props.crearEjercicio}>
-                                                Crear ejercicio
+                                            Crear ejercicio
                                             </li>
                                         </ul>
                                     </React.Fragment>
@@ -56,7 +49,7 @@ const Info_usuario = (props) => {
                                 {
                                     props.admin === 0 &&
                                     <React.Fragment>
-                                        Temas
+                                    Temas
                                         <ul>
                                             {
                                                 props.temas.map(tem => {
@@ -67,6 +60,9 @@ const Info_usuario = (props) => {
                                                     )
                                                 })
                                             }
+                                            <li className="btn_menu" onClick={props.muestraTodos}>
+                                                Todos
+                                            </li>
                                         </ul>
                                     </React.Fragment>
                                 }
@@ -79,6 +75,13 @@ const Info_usuario = (props) => {
                                 }}>Cerrar sesion</div>
                             </Container>
                         </React.Fragment>
+                ) : (
+                        <Container fluid className="my-2 text-center">
+                            <div><BsChevronCompactDown className="btn_menu" onClick={() => {
+                                setShow(!show);
+                            }} /></div>
+
+                        </Container>
                     )}
 
             </Row>

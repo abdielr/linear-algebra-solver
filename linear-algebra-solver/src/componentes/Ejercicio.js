@@ -17,9 +17,9 @@ const Ejercicio = (props) => {
                 : 
                 <React.Fragment>
                     <h4>Nuevo titulo</h4>
-                    <Form.Control name="titulo" type="text" placeholder={props.ejercicio.titulo} required onChange={props.onChange} />
+                    <Form.Control name="titulo" type="text" placeholder={props.ejercicio.titulo} required onChange={props.actualiza} />
                     <h4 className="mt-2">Nueva descripción</h4> 
-                        <Form.Control name="descripcion" type="text" placeholder={props.ejercicio.descripcion} required onChange={props.onChange} />
+                        <Form.Control name="descripcion" type="text" placeholder={props.ejercicio.descripcion} required onChange={props.actualiza} />
                 </React.Fragment>
             }
             <Row className="mt-4 display_video">
@@ -74,7 +74,7 @@ const Ejercicio = (props) => {
                             <Col>
                                 {
                                     props.admin === 0 ? <Button id={props.ejercicio.id_ejercicio} className="opc_menu" onClick={props.enviar}>Evaluar</Button>
-                                        : <Button id={props.ejercicio.id_ejercicio} variant="success" className="opc_menu" onClick={props.enviar}>Guardar cambios</Button>
+                                        : <Button id={props.ejercicio.id_ejercicio} variant="success" className="opc_menu" onClick={props.enviaActualizacion}>Guardar cambios</Button>
                                 }
                             </Col>
                             <Col>

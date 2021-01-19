@@ -37,9 +37,16 @@ class Home extends React.Component{
                 d: "",
                 respuesta: ""
             },
-            score: [],
+            score: {
+                respuesta: [],
+                datos: []
+            },
             respuestaUsuario: {
                 op: ""
+            },
+            ejercicioActualizado:{
+                titulo: "",
+                descripcion: ""
             }
         }
         
@@ -61,7 +68,6 @@ class Home extends React.Component{
                         ejer: result.topics
                     }
                 })
-                //console.log(self.state.ejercicios)
             },
             error: function (result) {
                 self.setState({ error: result })
@@ -74,7 +80,6 @@ class Home extends React.Component{
             crossDomain: true,
             dataType: 'json',
             success: function (result) {
-                //console.log(result.temas)
                 self.setState({
                     temas: result.temas
                 })
@@ -90,7 +95,6 @@ class Home extends React.Component{
             crossDomain: true,
             dataType: 'json',
             success: function (result) {
-                //console.log(result.topics)
                 self.setState({
                     subtemas: result.topics
                 })
@@ -99,7 +103,7 @@ class Home extends React.Component{
                 self.setState({ error: result })
             }
         })
-        url = server + 'scoreboard/getScoreByIdUser?id_usuario=' + this.state.data.user.id_usuario
+        url = server + 'scoreboard/getScoreDetailsByIdUser?id_usuario=' + this.state.data.user.id_usuario
         $.ajax({
             type: "POST",
             url: url,
@@ -107,9 +111,38 @@ class Home extends React.Component{
             dataType: 'json',
             success: function (result) {
                 self.setState({
-                    score: result
+                    score: {
+                        respuesta: {'state': result.state,
+                                    'message': result.message},
+                        datos: result.score
+                    }
                 })
                 console.log(result)
+            },
+            error: function (result) {
+                self.setState({ error: result })
+            }
+        })
+    }
+
+    handleObtienesTodosEjercicios = () => {
+        var self = this
+        var url = server + 'excercises/getAllExcercices'
+        $.ajax({
+            type: "POST",
+            url: url,
+            crossDomain: true,
+            dataType: 'json',
+            success: function (result) {
+                self.setState({
+                    ejercicios: {
+                        respuesta: {
+                            'state': result.state,
+                            'message': result.message
+                        },
+                        ejer: result.topics
+                    }
+                })
             },
             error: function (result) {
                 self.setState({ error: result })
@@ -159,12 +192,10 @@ class Home extends React.Component{
             processData: false,
             contentType: false,
             success: function (result) {
-                //console.log(result.ejercicio)
                 self.setState({
                     vista: 2,
                     ejercicioSeleccionado: result.ejercicio
                 })
-                console.log(self.state.ejercicioSeleccionado)
             },
             error: function (result) {
                 self.setState({ error: result })
@@ -191,23 +222,13 @@ class Home extends React.Component{
         });
     }
 
-    handleObtieneTemas = async() => {
-
-        var self = this
-        var url = server + 'topics/getAllTopics'
-        $.ajax({
-            type: "GET",
-            url: url,
-            crossDomain: true,
-            dataType: 'json',
-            success: function (result) {
-                console.log(result)
-            },
-            error: function (result) {
-                self.setState({ error: result })
+    handleChangeEjercicioActualizado = (e) => {
+        this.setState({
+            ejercicioActualizado: {
+                ...this.state.ejercicioActualizado,
+                [e.target.name]: e.target.value
             }
-        })
-
+        });
     }
 
     handleObtenEjerciciosTema = (e) => {
@@ -229,7 +250,6 @@ class Home extends React.Component{
                         ejer: result.ejercicios
                     }
                 })
-                console.log(result)
             },
             error: function (result) {
                 self.setState({ error: result })
@@ -248,7 +268,7 @@ class Home extends React.Component{
         var respCorrect = this.state.ejercicioSeleccionado.respuesta
         var calif
         if(respUs.toLowerCase() === respCorrect.toLowerCase()){
-            calif = 10
+            calif = 1
         }else{
             calif = 0
         }
@@ -260,11 +280,12 @@ class Home extends React.Component{
             crossDomain: true,
             dataType: 'json',
             success: function (result) {
-                alert(result.message + "con resultado de "+ calif)
+                alert(result.message)
                 if(result.state === 200){
                     self.setState({
                         vista: 0
                     })
+                    window.location.href = window.location.href;
                 }
             },
             error: function (result) {
@@ -295,6 +316,27 @@ class Home extends React.Component{
         }
     }
 
+    handleEnviaUpdateEjercicio = (e) => {
+
+        console.log(e.target.id)
+        var self = this
+        var url = server + 'excercises/updateExcercise?id_ejercicio=' + e.target.id + '&titulo=' + this.state.ejercicioActualizado.titulo +'&descripcion='+this.state.ejercicioActualizado.descripcion
+        $.ajax({
+            type: "POST",
+            url: url,
+            crossDomain: true,
+            dataType: 'json',
+            success: function (result) {
+                alert(result.message)
+            },
+            error: function (result) {
+                self.setState({ error: result })
+            }
+        })
+        window.location.href = window.location.href
+
+    }
+
     render(){
         return(
             <Container fluid className="cont-home">
@@ -306,12 +348,15 @@ class Home extends React.Component{
                                     admin={this.state.admin}
                                     crearEjercicio={this.handleVistaCrearEjercicio}
                                     obtenEjercicioTema={this.handleObtenEjerciciosTema}
-                                    temas={this.state.temas}/>
+                                    temas={this.state.temas}
+                                    muestraTodos={this.handleObtienesTodosEjercicios}/>
                             </Col>
-
-                            <Col xl={12}>
-                                <Contestados score={this.state.score}/>
-                            </Col>
+                            {
+                                this.state.admin === 0 &&
+                                <Col xl={12}>
+                                    <Contestados score={this.state.score.datos} />
+                                </Col>
+                            }
                         </Row>
                     </Col>
                     <Col>
@@ -342,7 +387,9 @@ class Home extends React.Component{
                                     enviar={this.handleEnviarRespuestaEjercicio}
                                     admin={this.state.admin}
                                     ejercicio={this.state.ejercicioSeleccionado}
-                                    cambia={this.handleChangeRespuestaUsuario}/>
+                                    cambia={this.handleChangeRespuestaUsuario}
+                                    actualiza={this.handleChangeEjercicioActualizado}
+                                    enviaActualizacion={this.handleEnviaUpdateEjercicio}/>
                             }
                         </Container>
                     </Col>

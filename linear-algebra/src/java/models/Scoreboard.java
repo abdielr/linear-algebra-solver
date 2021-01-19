@@ -45,7 +45,7 @@ public class Scoreboard {
                     + "on ejercicio.id_tema = tema.id_tema\n"
                     + "left join subtema\n"
                     + "on ejercicio.id_sub = subtema.id_subtema\n"
-                    + "where scoreboard.id_usuario = 1;";
+                    + "where scoreboard.id_usuario = ?;";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
