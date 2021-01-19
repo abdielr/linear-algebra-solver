@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container, Row, Col} from 'react-bootstrap'
 import User from '../componentes/Info-usuario'
-//import Contestados from '../componentes/Contestados-ejercicios'
+import Contestados from '../componentes/Contestados-ejercicios'
 import ListaEjercicios from '../componentes/Lista-ejercicios'
 import Ejercicio from '../componentes/Ejercicio'
 import CrearEjercicio from '../componentes/Crear-ejercicio'
@@ -36,6 +36,10 @@ class Home extends React.Component{
                 c: "",
                 d: "",
                 respuesta: ""
+            },
+            score: [],
+            respuestaUsuario: {
+                op: ""
             }
         }
         
@@ -90,6 +94,22 @@ class Home extends React.Component{
                 self.setState({
                     subtemas: result.topics
                 })
+            },
+            error: function (result) {
+                self.setState({ error: result })
+            }
+        })
+        url = server + 'scoreboard/getScoreByIdUser?id_usuario=' + this.state.data.user.id_usuario
+        $.ajax({
+            type: "POST",
+            url: url,
+            crossDomain: true,
+            dataType: 'json',
+            success: function (result) {
+                self.setState({
+                    score: result
+                })
+                console.log(result)
             },
             error: function (result) {
                 self.setState({ error: result })
@@ -162,6 +182,15 @@ class Home extends React.Component{
         });
     }
 
+    handleChangeRespuestaUsuario = (e) => {
+        this.setState({
+            respuestaUsuario: {
+                ...this.state.respuestaUsuario,
+                [e.target.name]: e.target.value
+            }
+        });
+    }
+
     handleObtieneTemas = async() => {
 
         var self = this
@@ -184,7 +213,7 @@ class Home extends React.Component{
     handleObtenEjerciciosTema = (e) => {
         
         var self = this
-        var url = server + 'excercises/getExcerciseByIdTopic?id_tema=' + e.target.id
+        var url = server + 'excercises/getExcercisesByIdTopic?id_tema=' + e.target.id
         $.ajax({
             type: "POST",
             url: url,
@@ -197,9 +226,10 @@ class Home extends React.Component{
                             'state': result.state,
                             'message': result.message
                         },
-                        ejer: result.topics
+                        ejer: result.ejercicios
                     }
                 })
+                console.log(result)
             },
             error: function (result) {
                 self.setState({ error: result })
@@ -213,12 +243,34 @@ class Home extends React.Component{
         })
     }
 
-    handleEnviarRespuestaEjercicio = () => {
-
-        this.setState({
-            vista: 0
+    handleEnviarRespuestaEjercicio = (e) => {
+        var respUs = this.state.respuestaUsuario.op
+        var respCorrect = this.state.ejercicioSeleccionado.respuesta
+        var calif
+        if(respUs.toLowerCase() === respCorrect.toLowerCase()){
+            calif = 10
+        }else{
+            calif = 0
+        }
+        var self = this
+        var url = server + 'scoreboard/score?evaluacion=' + calif + '&id_ejercicio=' + e.target.id + '&id_usuario='+this.state.data.user.id_usuario
+        $.ajax({
+            type: "POST",
+            url: url,
+            crossDomain: true,
+            dataType: 'json',
+            success: function (result) {
+                alert(result.message + "con resultado de "+ calif)
+                if(result.state === 200){
+                    self.setState({
+                        vista: 0
+                    })
+                }
+            },
+            error: function (result) {
+                self.setState({ error: result })
+            }
         })
-
     }
 
     handleBorrarEjercicioPorId = (e) => {
@@ -257,9 +309,9 @@ class Home extends React.Component{
                                     temas={this.state.temas}/>
                             </Col>
 
-                            {/*<Col xl={12}>
-                                <Contestados />
-                            </Col>*/}
+                            <Col xl={12}>
+                                <Contestados score={this.state.score}/>
+                            </Col>
                         </Row>
                     </Col>
                     <Col>
@@ -290,7 +342,7 @@ class Home extends React.Component{
                                     enviar={this.handleEnviarRespuestaEjercicio}
                                     admin={this.state.admin}
                                     ejercicio={this.state.ejercicioSeleccionado}
-                                    />
+                                    cambia={this.handleChangeRespuestaUsuario}/>
                             }
                         </Container>
                     </Col>

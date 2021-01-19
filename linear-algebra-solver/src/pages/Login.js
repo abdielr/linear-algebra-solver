@@ -122,6 +122,7 @@ class Login extends React.Component{
                     self.setState({ error: result })
                 }
             })
+            window.location.href = window.location.href
         }
     }
 

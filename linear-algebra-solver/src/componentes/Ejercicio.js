@@ -30,7 +30,7 @@ const Ejercicio = (props) => {
                 </Col>
                 <Col xl={6}>
                     <ReactPlayer
-                        url="https://www.youtube.com/watch?v=vS4NxiURhEw"
+                        url={props.ejercicio.video}
                         className='react-player'
                         width='100%'
                         height='100%'
@@ -38,27 +38,39 @@ const Ejercicio = (props) => {
                     />
                 </Col>
             </Row>
-            <Row className="mt-4">
-                <Col xl={6}>
+            <Row className="mt-5">
+                <Col xl={3}>
                     <Container fluid className="text-left lista_op">
-                        <ul>
-                            <li><Button className="opc_menu">A</Button><Image id="imagen" src={`data:image/png;base64,${props.ejercicio.a}`} thumbnail width="25%" /></li>
-                            <li><Button className="opc_menu">B</Button><Image id="imagen" src={`data:image/png;base64,${props.ejercicio.b}`} thumbnail width="25%" /></li>
-                            <li><Button className="opc_menu">C</Button><Image id="imagen" src={`data:image/png;base64,${props.ejercicio.c}`} thumbnail width="25%" /></li>
-                            <li><Button className="opc_menu">D</Button><Image id="imagen" src={`data:image/png;base64,${props.ejercicio.d}`} thumbnail width="25%" /></li>
-                        </ul>
+                        <Image id="imagen" src={`data:image/png;base64,${props.ejercicio.a}`} thumbnail className="img-op"/>
                     </Container>
                 </Col>
-                <Col xl={6} className="pt-3">
+                <Col xl={3}>
+                    <Container fluid className="text-left lista_op">
+                        <Image id="imagen" src={`data:image/png;base64,${props.ejercicio.b}`} thumbnail className="img-op"/>
+                    </Container>
+                </Col>
+                <Col xl={3}>
+                    <Container fluid className="text-left lista_op">
+                        <Image id="imagen" src={`data:image/png;base64,${props.ejercicio.c}`} thumbnail className="img-op"/>
+                    </Container>
+                </Col>
+                <Col xl={3}>
+                    <Container fluid className="text-left lista_op">
+                        <Image id="imagen" src={`data:image/png;base64,${props.ejercicio.d}`} thumbnail className="img-op"/>
+                    </Container>
+                </Col>
+            </Row>
+            <Row>
+                <Col xl={12}>
                     <Container fluid>
                         {
-                            props.admin === 1 &&
-                            <Row className="mb-5">
-                                <h4>Respuesta correcta</h4>
-                                <Form.Control name="respuesta" type="text" placeholder={props.ejercicio.respuesta} required onChange={props.onChange} />
-                            </Row>
+                            props.admin === 0 && 
+                            <React.Fragment>
+                                <h3 className="mt-4">Respuesta</h3>
+                                <Form.Control name="op" type="text" onChange={props.cambia} required/>
+                            </React.Fragment>
                         }
-                        <Row className="text-center pb-4">
+                        <Row className="text-center my-4">
                             <Col>
                                 {
                                     props.admin === 0 ? <Button id={props.ejercicio.id_ejercicio} className="opc_menu" onClick={props.enviar}>Evaluar</Button>
@@ -69,9 +81,6 @@ const Ejercicio = (props) => {
                                 <Button id={props.ejercicio.id_ejercicio} variant="danger" className="opc_menu" onClick={props.regresar}>Cancelar</Button>
                             </Col>
                         </Row>
-                        {
-                            props.admin === 0 && <h3>Respuesta</h3>
-                        }
                     </Container>
                 </Col>
             </Row>
