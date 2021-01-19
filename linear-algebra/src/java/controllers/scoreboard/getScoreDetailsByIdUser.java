@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers.excercise;
+package controllers.scoreboard;
 
+import controllers.excercise.getExcerciseById;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -15,13 +16,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Excercise;
+import models.Scoreboard;
 import org.json.JSONObject;
 
 /**
  *
  * @author abyki
  */
-public class updateExcercise extends HttpServlet {
+public class getScoreDetailsByIdUser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,7 +48,7 @@ public class updateExcercise extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+        
     }
 
     /**
@@ -60,27 +62,25 @@ public class updateExcercise extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+        response.addHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
+        
+        String id = request.getParameter("id_usuario");
+        Excercise e;
         try {
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.addHeader("Access-Control-Allow-Origin", "*");
-            response.addHeader("Access-Control-Allow-Credentials", "true");
-            response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
-            response.addHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
-            String id_ejercicio = request.getParameter("id_ejercicio");
-            String titulo = request.getParameter("titulo");
-            String descripcion = request.getParameter("descripcion");
-            Excercise e = new Excercise();
-            JSONObject data = e.updateExcercise(id_ejercicio,titulo,descripcion);
+            Scoreboard s = new Scoreboard();
+           JSONObject data = s.getScoreDetailsByIdUser(id);
            response.getWriter().print(data);
            response.getWriter().flush();
         } catch (SQLException ex) {
-            Logger.getLogger(updateExcercise.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getExcerciseById.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(updateExcercise.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getExcerciseById.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
     }
 
     /**

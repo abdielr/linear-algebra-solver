@@ -52,6 +52,10 @@
         <servlet-name>updateExcercise</servlet-name>
         <servlet-class>controllers.excercise.updateExcercise</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>getScoreDetailsByIdUser</servlet-name>
+        <servlet-class>controllers.scoreboard.getScoreDetailsByIdUser</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/api/SignUp</url-pattern>
@@ -99,6 +103,10 @@
     <servlet-mapping>
         <servlet-name>updateExcercise</servlet-name>
         <url-pattern>/api/excercises/updateExcercise</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getScoreDetailsByIdUser</servlet-name>
+        <url-pattern>/api/scoreboard/getScoreDetailsByIdUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
