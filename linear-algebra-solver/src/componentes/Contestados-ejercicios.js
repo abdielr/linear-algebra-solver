@@ -12,12 +12,12 @@ const Contestados_ejercicios = (props) => {
 
         <Container fluid className="cont-ejer-res">
             <h4 className="py-3">Ejercicios resueltos</h4>
-            {
+            {/* Comprueba si el score existe o no */
                 props.score === undefined ? 
                 <Container>
                     <p>No se encontraron ejercicios resueltos por el usuario</p>
                 </Container>
-                :
+                    : /* Si existe mapea el JSON obtenido */
                 props.score.map((sc) => {
 
                     return (

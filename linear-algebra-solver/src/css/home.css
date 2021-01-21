@@ -19,6 +19,18 @@ b{
     font-family: 'Roboto Slab', serif;
 }
 
+p i {
+    font-size: 11px;
+}
+
+p b {
+    color: black;
+}
+
+p{
+    font-family: 'Quicksand', sans-serif;
+}
+
 h4, h3{
     font-family: 'Roboto Slab', serif;
     font-weight: 400;

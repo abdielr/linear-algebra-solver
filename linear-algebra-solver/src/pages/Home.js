@@ -6,6 +6,7 @@ import ListaEjercicios from '../componentes/Lista-ejercicios'
 import Ejercicio from '../componentes/Ejercicio'
 import CrearEjercicio from '../componentes/Crear-ejercicio'
 import Error from '../componentes/Error'
+import Temas from '../componentes/Temas'
 import '../css/home.css'
 import server from '../config-url'
 import $ from 'jquery'
@@ -52,6 +53,7 @@ class Home extends React.Component{
         
     } 
 
+    /* Obtiene los ejercicios, los temas y el score del usuario una vez que el componente este renderizado */
     componentDidMount(){
         var self = this
         var url = server + 'excercises/getAllExcercices'
@@ -117,7 +119,6 @@ class Home extends React.Component{
                         datos: result.score
                     }
                 })
-                console.log(result)
             },
             error: function (result) {
                 self.setState({ error: result })
@@ -125,7 +126,11 @@ class Home extends React.Component{
         })
     }
 
+    /* Petición para obtener todos los ejercicios */
     handleObtienesTodosEjercicios = () => {
+        this.setState({
+            vista: 0
+        })
         var self = this
         var url = server + 'excercises/getAllExcercices'
         $.ajax({
@@ -150,12 +155,14 @@ class Home extends React.Component{
         })
     }
 
+    /* Fucnión para cambiar a la vista Crear Ejercicio */
     handleVistaCrearEjercicio = () => {
         this.setState({
             vista: 1
         })
     }
 
+    /* Fucnión para enviar el Ejercicio Creado por el admin al server */
     enviarEjercicioCreado = async() => {
         var fd = new FormData(document.getElementById("fileinfo"));
         var self = this
@@ -169,7 +176,6 @@ class Home extends React.Component{
             contentType: false,
             data: fd,
             success: function (result) {
-                console.log(result)
                 self.setState({
                     vista: 0
                 })
@@ -181,6 +187,7 @@ class Home extends React.Component{
         window.location.href = window.location.href
     }
 
+    /* Función para cambiar a la vista Ejercicio y obtiene la información de ese ejercicio */
     handleVistaEjercicio = (e) => {
         var self = this
         var url = server + 'excercices/getExcerciseById?id_ejercicio=' + e.target.id
@@ -204,6 +211,7 @@ class Home extends React.Component{
 
     }
     
+    /* Change para ir guardando los cambios del input ejercicio creado del admin */
     handleChangeCrearEjercicio = (e) => {
         this.setState({
             ejercicioCreado: {
@@ -213,6 +221,7 @@ class Home extends React.Component{
         });
     }
 
+    /* Change para ir guardando dinamicamente las respuestas del usuario al contestar un ejercicio */
     handleChangeRespuestaUsuario = (e) => {
         this.setState({
             respuestaUsuario: {
@@ -222,6 +231,7 @@ class Home extends React.Component{
         });
     }
 
+    /* Change para guardar los input del ejercicio actualizado del admin */
     handleChangeEjercicioActualizado = (e) => {
         this.setState({
             ejercicioActualizado: {
@@ -231,8 +241,11 @@ class Home extends React.Component{
         });
     }
 
+    /* Petición para obtener los ejercicios dependiendo el tema y cambia la vista a ejercicios por tema */
     handleObtenEjerciciosTema = (e) => {
-        
+        this.setState({
+            vista: 0
+        })
         var self = this
         var url = server + 'excercises/getExcercisesByIdTopic?id_tema=' + e.target.id
         $.ajax({
@@ -257,12 +270,14 @@ class Home extends React.Component{
         })
     }
 
+    /* Función para cancelar al resolver un ejercicio por parte del usuario */
     handleBotonRegresoEjercicio = () => {
         this.setState({
             vista: 0
         })
     }
 
+    /* Petición para guardar el resultado del usuario al contestar un ejercicio */
     handleEnviarRespuestaEjercicio = (e) => {
         var respUs = this.state.respuestaUsuario.op
         var respCorrect = this.state.ejercicioSeleccionado.respuesta
@@ -294,10 +309,10 @@ class Home extends React.Component{
         })
     }
 
+    /* Petición para borrar un ejercicio por parte del admin */
     handleBorrarEjercicioPorId = (e) => {
         var op = window.confirm("¿Desea eliminar este ejercicio?\n\nAl hacer click en aceptar esta acción no se puede deshacer.")
         if(op){
-            console.log(e.target.id)
             var self = this
             var url = server + 'excercises/deleteExcerciseById?id_ejercicio=' + e.target.id
             $.ajax({
@@ -316,9 +331,9 @@ class Home extends React.Component{
         }
     }
 
+    /* Petición para guardar los cambios de un ejercicio por parte del admin */
     handleEnviaUpdateEjercicio = (e) => {
 
-        console.log(e.target.id)
         var self = this
         var url = server + 'excercises/updateExcercise?id_ejercicio=' + e.target.id + '&titulo=' + this.state.ejercicioActualizado.titulo +'&descripcion='+this.state.ejercicioActualizado.descripcion
         $.ajax({
@@ -337,6 +352,13 @@ class Home extends React.Component{
 
     }
 
+    /* Función para cambiar a la vista Temas */
+    handleVistaTemas = () => {
+        this.setState({
+            vista: 3
+        })
+    }
+
     render(){
         return(
             <Container fluid className="cont-home">
@@ -349,9 +371,10 @@ class Home extends React.Component{
                                     crearEjercicio={this.handleVistaCrearEjercicio}
                                     obtenEjercicioTema={this.handleObtenEjerciciosTema}
                                     temas={this.state.temas}
-                                    muestraTodos={this.handleObtienesTodosEjercicios}/>
+                                    muestraTodos={this.handleObtienesTodosEjercicios}
+                                    vistaTemas={this.handleVistaTemas}/>
                             </Col>
-                            {
+                            {/* Comprueba si el usuario es admin */
                                 this.state.admin === 0 &&
                                 <Col xl={12}>
                                     <Contestados score={this.state.score.datos} />
@@ -361,7 +384,7 @@ class Home extends React.Component{
                     </Col>
                     <Col>
                         <Container fluid className="cont-ejer my-3 pt-2 pb-4">
-                            {
+                            {/* Comprueba la vista a mostrar */
                                 this.state.vista === 0 &&
                                 (
                                     this.state.ejercicios.state === 404 ? <Error status={this.state.ejercicios.respuesta.state} mensaje={this.state.ejercicios.respuesta.message}/> :
@@ -369,10 +392,10 @@ class Home extends React.Component{
                                         onClick={this.handleClick}
                                         admin={this.state.admin}
                                         responder={this.handleVistaEjercicio}
-                                        borrar={this.handleBorrarEjercicioPorId}/> 
+                                        borrar={this.handleBorrarEjercicioPorId}/>
                                 )
                             }
-                            {
+                            {/* Comprueba la vista a mostrar */
                                 this.state.vista === 1 &&
                                 <CrearEjercicio onClick={this.enviarEjercicioCreado}
                                     onChange={this.handleChangeCrearEjercicio}
@@ -380,7 +403,7 @@ class Home extends React.Component{
                                     temas={this.state.temas}
                                     subtemas={this.state.subtemas}/>
                             }
-                            {
+                            {/* Comprueba la vista a mostrar */
                                 this.state.vista === 2 &&
                                 <Ejercicio 
                                     regresar={this.handleBotonRegresoEjercicio}
@@ -390,6 +413,10 @@ class Home extends React.Component{
                                     cambia={this.handleChangeRespuestaUsuario}
                                     actualiza={this.handleChangeEjercicioActualizado}
                                     enviaActualizacion={this.handleEnviaUpdateEjercicio}/>
+                            }
+                            {/* Comprueba la vista a mostrar */
+                                this.state.vista === 3 &&
+                                <Temas />
                             }
                         </Container>
                     </Col>

@@ -22,7 +22,7 @@ const Crear_ejercicio = (props) => {
                                 <Form.Label>Tema</Form.Label>
                                 <Form.Control name="id_tema" as="select" required onChange={props.onChange}>
                                     <option>Escoga un tema</option>
-                                    {
+                                    { /* Mapeo de los temas obtenido para poner en un select */
                                         props.temas.map(tem => {
                                             return(
                                                 <option key={tem.id_tema} value={tem.id_tema}>{tem.titulo}</option>
@@ -37,7 +37,7 @@ const Crear_ejercicio = (props) => {
                                 <Form.Label>Subtema</Form.Label>
                                 <Form.Control name="id_subtema" as="select" required onChange={props.onChange}>
                                     <option>Escoga un subtema</option>
-                                    {
+                                    {/* Mapeo de los subtemas obtenido para poner en un select */
                                         props.subtemas.map(sub => {
                                             return (
                                                 <option key={sub.id_subtema} value={sub.id_subtema}>{sub.subtema}</option>

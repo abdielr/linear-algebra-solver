@@ -15,18 +15,18 @@ const Info_usuario = (props) => {
                     <Image src={user} roundedCircle width="120%" />
                 </Col>
                 <Col xl={9} className="mt-2">
-                    <p className="opc_menu"><b>Nombre:</b> {props.user.name}</p>
+                    <div className="opc_menu"><b>Nombre:</b> {props.user.name}</div>
                 </Col>
             </Row>
             <Row>
                 <Col xl={12} className="my-2">
-                    <p className="opc_menu"><b>Usuario:</b> {props.user.username}</p>
+                    <div className="opc_menu"><b>Usuario:</b> {props.user.username}</div>
                 </Col>
             </Row>
             <Row>
                 <Container fluid className="linea"></Container>
 
-                {show ? (
+                {show ? ( /* Verifica si el menu esta extendido o no */
                     <React.Fragment>
                             <Container fluid className="my-2 text-center">
                                 <div><BsChevronCompactUp className="btn_menu" onClick={() => {
@@ -35,7 +35,7 @@ const Info_usuario = (props) => {
                             </Container>
                             <Container fluid className="linea"></Container>
                             <Container className="py-2 opc_menu">
-                                {
+                                { /* Verifica si es admin el usuario */
                                     props.admin === 1 &&
                                     <React.Fragment>
                                     Opciones
@@ -46,12 +46,12 @@ const Info_usuario = (props) => {
                                         </ul>
                                     </React.Fragment>
                                 }
-                                {
+                            {/* Verifica si es admin el usuario */
                                     props.admin === 0 &&
                                     <React.Fragment>
-                                    Temas
+                                    Ejercicios
                                         <ul>
-                                            {
+                                            { /* Mapea los temas obtenidos */
                                                 props.temas.map(tem => {
                                                     return(
                                                         <li key={tem.id_tema} id={tem.id_tema} name={tem.id_tema} className="btn_menu" onClick={props.obtenEjercicioTema}>
@@ -64,6 +64,7 @@ const Info_usuario = (props) => {
                                                 Todos
                                             </li>
                                         </ul>
+                                    <div className="btn_menu" onClick={props.vistaTemas}>Temas</div>
                                     </React.Fragment>
                                 }
                             </Container>
@@ -91,61 +92,3 @@ const Info_usuario = (props) => {
 }
 
 export default Info_usuario
-
-/*return (
-                <Container fluid className="cont-user">
-                    <Row>
-                        <Col xl={3} className="mt-2">
-                            <Image src={user} roundedCircle width="120%" />
-                        </Col>
-                        <Col xl={9} className="mt-2">
-                            <b>Nombre:</b> {props.user.name}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xl={12} className="my-2">
-                            <b>Usuario:</b> {props.user.username}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Container fluid className="linea"></Container>
-
-                        {show ? (
-                            <Container fluid className="my-2 text-center">
-                                <div><BsChevronCompactDown className="btn_menu" onClick={() => {
-                                    setShow(!show);
-                                }} /></div>
-
-                            </Container>
-                        ) : (
-                                <React.Fragment>
-                                    <Container fluid className="my-2 text-center">
-                                        <div><BsChevronCompactUp className="btn_menu" onClick={() => {
-                                            setShow(!show);
-                                        }} /></div>
-                                    </Container>
-                                    <Container fluid className="linea"></Container>
-                                    <Container className="py-2">
-                                        Temas
-                                        <ul>
-                                            <li className="btn_menu">
-                                                Vectores
-                                            </li>
-                                            <li className="btn_menu">
-                                                Matrices
-                                            </li>
-                                        </ul>
-                                    </Container>
-                                    <Container fluid className="linea"></Container>
-                                    <Container className="py-2">
-                                        <div className="btn_logout" onClick={() => {
-                                            window.localStorage.removeItem("APP_USER")
-                                            window.location.href = '/'
-                                        }}>Cerrar sesion</div>
-                                    </Container>
-                                </React.Fragment>
-                            )}
-
-                    </Row>
-                </Container>
-            ) */

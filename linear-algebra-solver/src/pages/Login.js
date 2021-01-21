@@ -32,6 +32,7 @@ class Login extends React.Component{
 
     }
 
+    /* Change para guardar los campos del login */
     handleChange = (e) => {
 
         this.setState({
@@ -43,6 +44,7 @@ class Login extends React.Component{
 
     }
 
+    /* Change para guardar los campos del registro */
     handleChangeRegistrar = (e) => {
 
         this.setState({
@@ -54,6 +56,7 @@ class Login extends React.Component{
 
     }
 
+    /* Peticion para iniciar sesión */
     handleEnviar = () => {
         if(this.state.form.user !== "" && this.state.form.pass !== ""){
             var self = this
@@ -87,6 +90,7 @@ class Login extends React.Component{
         }
     }
 
+    /* Peticion para enviar el registro del usuario */
     handleEnviarRegistro = () => {
         if (this.state.registro.apm !== "" && this.state.registro.app !== "" && this.state.registro.nombre !== "" && this.state.registro.pass !== "" && this.state.registro.user !== ""){
             var self = this
@@ -126,6 +130,7 @@ class Login extends React.Component{
         }
     }
 
+    /* Función para evitar actualizacion de pantalla en el submit */
     handleSubmit = (e) => {
         e.preventDefault()
     }
