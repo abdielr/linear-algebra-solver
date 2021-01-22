@@ -46,6 +46,10 @@ public class LogIn extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        /*
+        Metodo para ver si el usuario con el que se quiere inicar sesion existe
+        y sus credenciales son correctas.
+        */
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         String username =  request.getParameter("username");

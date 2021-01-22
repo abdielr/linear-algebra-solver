@@ -33,7 +33,7 @@ public class Excercise {
     }
     public JSONObject updateExcercise(String id, String titulo, String desc){
         JSONObject data = new JSONObject();
-
+        /*Metodo solo para hacer una actualziacion de datos para el ejercicio*/
         try {
             String query = "update ejercicio set titulo = ?, descripcion = ? where id_ejercicio = ? ";
             PreparedStatement ps = con.prepareStatement(query);
@@ -53,7 +53,7 @@ public class Excercise {
     }
     public JSONObject deleteExcerciseById(String id_excercise) {
         JSONObject data = new JSONObject();
-
+        /*Metodo para borrar el ejercicio por medio de su id*/
         try {
             String query = "delete from ejercicio where id_ejercicio = ?";
             PreparedStatement ps = con.prepareStatement(query);
@@ -71,6 +71,12 @@ public class Excercise {
     }
 
     public JSONObject getExcerciseByIdTopic(String id_excercise) {
+        /*Obtenemos Todos los detalles de un ejercicio perteneciente a un tema
+            utilizamos 2 left join para unir las columnas de las tamblas tema y subtema
+        Usamos Base64 para enviar el BLOB que esta guardado en la base de datos.
+        Usamos base46 para que no lleguen a existir bytes perdidos por caracteres no reconocidos
+        en el frontend.
+         */
         JSONObject data = new JSONObject();
         String query = "SELECT EJERCICIO.ID_EJERCICIO AS ID_EJERCICIO, "
                 + "EJERCICIO.TITULO AS TITULO,\n"
@@ -103,6 +109,7 @@ public class Excercise {
                     excercise.put("id_ejercicio", rs.getString("id_ejercicio"));
                     excercise.put("video", rs.getString("video"));
                     String encodedA, encodedB, encodedC, encodedD, encodedImage;
+                    /*Si es que no hayu una imagen guardada simplemente manda un string vacio*/
                     if (rs.getBlob("a") != null) {
                         encodedA = Base64.getEncoder().encodeToString(rs.getBlob("a").getBytes(1, (int) rs.getBlob("a").length()));
 
@@ -166,6 +173,9 @@ public class Excercise {
 
     public JSONObject getExcerciseById(String id_excercise) {
         JSONObject data = new JSONObject();
+        /*
+        Obtenemos los detalles de el ejercicio filtrado por la id de este
+        */
         String query = "SELECT EJERCICIO.ID_EJERCICIO AS ID_EJERCICIO, "
                 + "EJERCICIO.TITULO AS TITULO,\n"
                 + "            	EJERCICIO.DESCRIPCION AS DESCRIPCION,\n"
@@ -259,6 +269,10 @@ public class Excercise {
     public JSONObject uploadExcercices(String title, InputStream imageURL, String description,
             InputStream aURL, InputStream bURL, InputStream cURL, InputStream dURL,
             String answer, String id_topic, String id_subtopic) {
+        /*
+            Para guardar las imagenes en la bd usamos el tipo de dato blob en MYSQL
+            Usamos el Input stream para guardar en la bd la imagen
+        */
         JSONObject data = new JSONObject();
         try {
 
@@ -288,7 +302,10 @@ public class Excercise {
     }
 
     public JSONObject getExcercices() {
-
+        /*
+        Se obtienen todos los ejercicios que estan en la base de datos
+        igualemnte con su tema y subtema pertenecientes
+        */
         JSONObject data = new JSONObject();
         String query = "SELECT EJERCICIO.ID_EJERCICIO AS ID_EJERCICIO,"
                 + "             EJERCICIO.TITULO AS TITULO,\n"

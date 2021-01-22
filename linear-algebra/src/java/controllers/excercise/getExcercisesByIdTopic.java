@@ -58,6 +58,10 @@ public class getExcercisesByIdTopic extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        /*
+        Aqui se obtienen todas las propiedades de TODOS los ejercicios pertenecientes
+        a un tema, el cual se selecciona por un id
+        */
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.addHeader("Access-Control-Allow-Origin", "*");

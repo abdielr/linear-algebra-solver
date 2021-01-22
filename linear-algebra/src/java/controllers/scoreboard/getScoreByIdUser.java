@@ -33,8 +33,6 @@ public class getScoreByIdUser extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -47,7 +45,7 @@ public class getScoreByIdUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**
@@ -61,7 +59,13 @@ public class getScoreByIdUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       response.setContentType("application/json");
+        /*
+        
+            Obtenemos los detalles del score que tiene un usuario individualmente
+            Se filtra por el ID del mismo
+        
+        */
+        response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         String id_usuario = request.getParameter("id_usuario");

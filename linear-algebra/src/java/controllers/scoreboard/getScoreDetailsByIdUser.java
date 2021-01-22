@@ -62,6 +62,12 @@ public class getScoreDetailsByIdUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        /*
+            Se obtienen los ejercicios resueltos, asi como el tema y subtema a los que 
+            pertenecen por medio de el id del usuario.
+        Tambien se obtienen sus calificaciones.
+        */
+        
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.addHeader("Access-Control-Allow-Origin", "*");

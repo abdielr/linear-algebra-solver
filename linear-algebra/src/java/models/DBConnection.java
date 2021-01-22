@@ -13,7 +13,10 @@ import java.sql.Connection;
  * @author abyki
  */
 public class DBConnection {
-    
+        /*
+            Esta es la clase, en la cual usaremos para la conexion
+            Los parametros extra en la URI de la conexion son para compatibilidad con MYSQL8
+    */
         public Connection conectar() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver"); 
         Connection con = null;

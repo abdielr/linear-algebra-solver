@@ -27,7 +27,9 @@ public class User {
     
     public JSONObject LogIn(String username,String password){
         JSONObject data = new JSONObject();
-        
+        /*En este metodo verifico si el usuario esta registrado en la base de datos, y si 
+        La contraseña ingresada es la correcta
+        */
         String query = "select * from usuario where username = ? and password = ? ";
         PreparedStatement ps;
         try {
@@ -64,7 +66,9 @@ public class User {
 
     public JSONObject SignUp(String username,String password,String name, String paterno, String materno){
        JSONObject data = new JSONObject();
-       
+       /*
+       Aqui guardamos toda la informacion para registro de el usuario en la base de datos
+       */
         try {
              
           String query = "insert into usuario( nombre, paterno, password , username, materno ) values (?,?,?,?,?)";

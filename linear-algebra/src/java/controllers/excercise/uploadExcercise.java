@@ -30,7 +30,14 @@ import org.json.JSONObject;
         maxRequestSize = 1024 * 1024 * 100 // 100 MB
 )
 public class uploadExcercise extends HttpServlet {
-
+    /*
+    
+    El multipart config es para que se limitar los tamanios de los archivos.
+    Estos se manejan por Flujos, (inputstream)
+    se ingresa titulo descripcion, sus imagenes y su respuesta.
+    
+    
+    */
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -54,7 +61,7 @@ public class uploadExcercise extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Credentials", "true");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
         response.addHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
