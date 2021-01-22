@@ -41,7 +41,7 @@ CREATE TABLE `ejercicio` (
   KEY `id_sub_idx` (`id_sub`),
   CONSTRAINT `id_sub` FOREIGN KEY (`id_sub`) REFERENCES `subtema` (`id_subtema`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_t` FOREIGN KEY (`id_tema`) REFERENCES `tema` (`id_tema`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,11 +65,15 @@ CREATE TABLE `scoreboard` (
   `id_scoreboard` int(11) NOT NULL AUTO_INCREMENT,
   `evaluacion` int(11) DEFAULT NULL,
   `fecha` datetime DEFAULT CURRENT_TIMESTAMP,
-  `id_ejercicio` varchar(45) DEFAULT NULL,
-  `id_usuario` varchar(45) DEFAULT NULL,
+  `id_ejercicio` int(11) DEFAULT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_scoreboard`),
-  KEY `id_usr_idx` (`id_scoreboard`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  KEY `id_usr_idx` (`id_scoreboard`),
+  KEY `id_user_idx` (`id_usuario`),
+  KEY `id_ejercicio_idx` (`id_ejercicio`),
+  CONSTRAINT `id_ejercicio` FOREIGN KEY (`id_ejercicio`) REFERENCES `ejercicio` (`id_ejercicio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `id_user` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_user`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +82,7 @@ CREATE TABLE `scoreboard` (
 
 LOCK TABLES `scoreboard` WRITE;
 /*!40000 ALTER TABLE `scoreboard` DISABLE KEYS */;
-INSERT INTO `scoreboard` VALUES (1,1,'2021-01-18 15:03:29','1','1');
+INSERT INTO `scoreboard` VALUES (1,1,'2021-01-18 15:03:29',1,1),(2,0,'2021-01-21 20:13:05',4,3);
 /*!40000 ALTER TABLE `scoreboard` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +101,7 @@ CREATE TABLE `subtema` (
   PRIMARY KEY (`id_subtema`),
   KEY `fk_tema_idx` (`id_tema`),
   CONSTRAINT `fk_tema` FOREIGN KEY (`id_tema`) REFERENCES `tema` (`id_tema`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +156,7 @@ CREATE TABLE `usuario` (
   `nivel` int(11) DEFAULT '0',
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +165,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'Jessica','Castro','1234','jssx',NULL,0),(2,'Abdiel','Reyes','2345','abykings','Rodriguez',1),(3,'Luis ','Zuniga','5678','lxxs',NULL,0);
+INSERT INTO `usuario` VALUES (1,'Jessica','Castro','1234','jssx',NULL,0),(2,'Abdiel','Reyes','2345','abykings','Rodriguez',1),(3,'Luis ','Zuniga','5678','lxxs',NULL,0),(4,'root','root','7777','root','root',1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -174,4 +178,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-18 19:43:52
+-- Dump completed on 2021-01-21 20:59:04
