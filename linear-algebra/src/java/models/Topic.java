@@ -31,7 +31,9 @@ public class Topic {
     public JSONObject getOnlyTopics() {
         JSONObject data = new JSONObject();
         try {
-
+            /*
+            Aqui obtenemos SOLO la lista de todos los temas que estan en la base de datos 
+            */
             String query = "select * from tema";
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -62,6 +64,11 @@ public class Topic {
     }
 
     public JSONObject getTopics() {
+        
+        /*
+        Aqui obtenemos todos los temas, pero con la relacion de los subtemas que poseen
+        */
+        
         JSONObject data = new JSONObject();
         String query = "SELECT tema.titulo as titulo, tema.video as video_tema, subtema.titulo as subtitulo, subtema.descripcion as descripcion, tema.id_tema as id_tema,"
                 + " subtema.id_subtema as id_subtema FROM tema INNER JOIN subtema on subtema.id_tema = tema.id_tema; ";

@@ -60,6 +60,10 @@ public class deleteExcerciseById extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        /*
+        Obtenemos el iddel ejercicio a eliminar, para proceder a llamar
+        el metodo correspondiente
+        */
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.addHeader("Access-Control-Allow-Origin", "*");

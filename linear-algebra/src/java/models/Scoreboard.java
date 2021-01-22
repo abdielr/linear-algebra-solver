@@ -30,6 +30,11 @@ public class Scoreboard {
 
     public JSONObject getScoreDetailsByIdUser(String id) {
         JSONObject data = new JSONObject();
+        /*
+            Se obtienen los campos de el puntaje del usuario
+            Se unen con el ejericcio al que pertenecen, asimismo con el tema y subtema
+            al que pertenece el ejercicio
+        */
         try {
             String query = "SELECT scoreboard.evaluacion,\n"
                     + "		scoreboard.fecha,\n"
@@ -79,6 +84,10 @@ public class Scoreboard {
 
     public JSONObject getScoreByIdUser(String id_usuario) {
         JSONObject data = new JSONObject();
+        /*
+        sacamos el puntaje total de el usuario y tamvien el numero de ejercicios resueltos
+        */
+        
         try {
 
             String query = "SELECT count(evaluacion) as solved, sum(evaluacion) as score from scoreboard where id_usuario = ? ";

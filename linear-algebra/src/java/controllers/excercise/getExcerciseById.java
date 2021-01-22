@@ -62,13 +62,17 @@ public class getExcerciseById extends HttpServlet {
             throws ServletException, IOException {
          response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Credentials", "true");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
         response.addHeader("Access-Control-Allow-Headers", "Content-Type, Accept");
         
         String id = request.getParameter("id_ejercicio");
         Excercise e;
+        /*
+        Aqui se obtiene la informacion del ejercicio por medio de su ID
+        */
+        
         try {
             e = new Excercise();
            JSONObject data = e.getExcerciseById(id);

@@ -60,6 +60,8 @@ public class score extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        /*Este servlet es para *encestar* una calificacion para un ejercicio.
+        */
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 

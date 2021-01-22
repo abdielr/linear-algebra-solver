@@ -60,6 +60,11 @@ public class updateExcercise extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        /*
+            Para hacer el update, se requiere de el id del ejercicio.
+            Solo se actualiza su titulo y descripcion.
+        
+        */
         try {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");

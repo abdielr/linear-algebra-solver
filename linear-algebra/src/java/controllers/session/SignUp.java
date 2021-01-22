@@ -49,6 +49,10 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        /*
+            Este metodo crea el usuario en la base de datos!
+            Los campos requeridos son el nombre, apellidos usuario y contrasenia.
+        */
        response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         String username =  request.getParameter("user");
